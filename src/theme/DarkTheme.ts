@@ -12,7 +12,7 @@ export const DARKTHEME = extendTheme({
     },
   },
   fonts: {
-    body: 'Roboto_400Regular'
+    body: 'Roboto'
   }
 
 })
