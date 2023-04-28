@@ -8,11 +8,13 @@ export const BASETHEME = extendTheme({
       700: '#121629'
     },
     secondary: {
-      700: '#EEBBC3'
+      700: '#EEBBC3',
+      900: '#d4939d'
     },
   },
   fonts: {
-    body: 'Roboto_400Regular'
+    body: 'Roboto_400Regular',
+    bold: 'Roboto_700Bold'
   }
 
 })
