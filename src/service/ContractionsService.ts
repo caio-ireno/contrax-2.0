@@ -9,10 +9,11 @@ export interface ContractionProps {
 
 export interface ListaContractionsProps {
   id: number
+  duration: string;
   hour: string;
   frequency: string;
-  duration: string;
 }
+
 
 type Contractions = {
   data: ContractionProps[]
@@ -38,14 +39,14 @@ const getAll = async (): Promise<Contractions | Error> => {
   }
 }
 
-const deleteById = async (id: number): Promise<void | Error> => {
+const deleteAll = async (id: number): Promise<void | Error> => {
   try {
     await Api.delete<ListaContractionsProps>(`/contractions/${id}`)
   } catch (error) {
     console.error(error)
     return new Error((error as { message: string }).message || 'Erro ao apagar')
   }
-}
+};
 
 const create = async (
   dados: Omit<ListaContractionsProps, 'id'>,
@@ -67,5 +68,5 @@ const create = async (
 export const ContractionsServices = {
   getAll,
   create,
-  deleteById,
+  deleteAll,
 }
