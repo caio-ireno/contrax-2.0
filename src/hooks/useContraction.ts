@@ -136,14 +136,21 @@ export const useContraction = (): ContractionHook => {
     durationMinutes: number,
     durationSeconds: number
   ) => {
-    const durationSecond = durationMinutes * 60 + durationSeconds;
-    const freqSecond = DurationFreqMinutes * 60 + DurationFreqSeconds;
-    const totalSeconds = freqSecond + durationSecond;
-    const newFreqSeconds = totalSeconds % 60;
-    const newFreqMinutes = freqMinutes + Math.floor(totalSeconds / 60);
+    let frequency = ''
+    if (DurationFreqSeconds === 0) {
+      frequency = '--:--'
+    } else {
 
-    const frequency = `${newFreqMinutes < 10 ? "0" + newFreqMinutes : newFreqMinutes
-      }:${newFreqSeconds < 10 ? "0" + newFreqSeconds : newFreqSeconds}`;
+      const durationSecond = durationMinutes * 60 + durationSeconds;
+      const freqSecond = DurationFreqMinutes * 60 + DurationFreqSeconds;
+      const totalSeconds = freqSecond + durationSecond;
+      const newFreqSeconds = totalSeconds % 60;
+      const newFreqMinutes = freqMinutes + Math.floor(totalSeconds / 60);
+
+      frequency = `${newFreqMinutes < 10 ? "0" + newFreqMinutes : newFreqMinutes
+        }:${newFreqSeconds < 10 ? "0" + newFreqSeconds : newFreqSeconds}`;
+    }
+
 
     const duration = `${durationMinutes < 10 ? "0" + durationMinutes : durationMinutes
       }:${durationSeconds < 10 ? "0" + durationSeconds : durationSeconds}`;

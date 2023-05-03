@@ -28,6 +28,7 @@ export const Contractions = () => {
         height={24}
         onPress={isActive ? stopTimer : startTime}
         mb={2}
+        borderRadius={10}
       >
         <Text fontFamily={"body"} fontSize={32}>
           {isActive
@@ -50,6 +51,12 @@ export const Contractions = () => {
           Deletar tudo
         </Text>
       </NativeBaseButton>
+
+      <Text fontFamily={"body"} fontSize={32}>
+        {`${freqMinutes < 10 ? "0" + freqMinutes : freqMinutes}:${
+          freqSeconds < 10 ? "0" + freqSeconds : freqSeconds
+        }`}
+      </Text>
 
       <HStack
         px={4}
