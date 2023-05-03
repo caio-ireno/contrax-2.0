@@ -1,12 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { ButtonCopy } from "../components/ButtonCopy";
-import {
-  FlatList,
-  HStack,
-  Button as NativeBaseButton,
-  Text,
-  VStack,
-} from "native-base";
+import { HStack, Button as NativeBaseButton, Text, VStack } from "native-base";
 import { TableList } from "../components/TableList";
 import { useDebounce } from "../hooks/UseDebounce";
 import {
