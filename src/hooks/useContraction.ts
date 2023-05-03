@@ -26,9 +26,9 @@ export const useContraction = (): ContractionHook => {
   const [DurationFreqSeconds, SetDurationFreqSeconds] = useState(0);
   const [DurationFreqMinutes, setDurationFreqMinutes] = useState(0);
 
-  const [isActive, setIsActive] = useState(false);
+  const [isActive, setIsActive] = useState(false); //altera o estado do botão para multi função
 
-  const [render, setRender] = useState(false);
+  const [render, setRender] = useState(false); //Da um re render na tabela
   const [rows, setRows] = useState<ContractionProps[]>([]);
   const { debounce } = useDebounce();
 
@@ -56,16 +56,20 @@ export const useContraction = (): ContractionHook => {
 
   const startTime = () => {
     setIsActive(true);
+
+    //Crio dois estados para armazenar os valore antes de zerar.
     SetDurationFreqSeconds(freqSeconds);
     setDurationFreqMinutes(freqMinutes);
+
+    //Quando start, cronometro de frequencia nao funciona, apenas de duração.
     setFreqMinutes(0);
     SetFreqSeconds(0);
+
+    //Limpar um intervalo  aso esteja sendo executado.
     if (customIntervalFreq) {
       clearInterval(customIntervalFreq);
     }
 
-    console.log(freqMinutes);
-    console.log(freqSeconds);
     SetCustomInterval(
       setInterval(() => {
         changeTimer();
