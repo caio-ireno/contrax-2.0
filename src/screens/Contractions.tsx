@@ -19,7 +19,14 @@ export const Contractions = () => {
   } = useContraction();
 
   return (
-    <VStack flex={1} alignItems={"center"} px={8} pt={24} pb={4}>
+    <VStack
+      flex={1}
+      alignItems={"center"}
+      px={8}
+      pt={24}
+      pb={4}
+      backgroundColor={"primary.300"}
+    >
       <ButtonCopy mb={4} />
       <NativeBaseButton
         bg="secondary.700"

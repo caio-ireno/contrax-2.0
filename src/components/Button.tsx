@@ -1,4 +1,3 @@
-import React from "react";
 import { Heading, Button as NativeBaseButton } from "native-base";
 
 interface ButtonProps extends React.ComponentProps<typeof NativeBaseButton> {

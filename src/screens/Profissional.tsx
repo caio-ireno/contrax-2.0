@@ -2,16 +2,13 @@ import { Heading, Text, VStack } from "native-base";
 import { LogoCompleto } from "../icons/LogoCompleto";
 import { Button } from "../components/Button";
 import { useNavigation } from "@react-navigation/native";
+import { Input } from "../components/Input";
 
-export const Login = () => {
+export const Profissional = () => {
   const navigation = useNavigation();
 
-  const handlePregnant = () => {
-    navigation.navigate("login");
-  };
-
-  const handleProfessional = () => {
-    navigation.navigate("profissional");
+  const handlePregnentInfo = () => {
+    console.log("login");
   };
 
   return (
@@ -24,9 +21,8 @@ export const Login = () => {
     >
       <LogoCompleto width="300" height="260" color="#121629" />
       <Heading mb={5}>Acesse sua conta</Heading>
-
-      <Button label="Paciente" mb={4} onPress={handlePregnant} />
-      <Button label="Profissional" onPress={handleProfessional} />
+      <Input mb={5} />
+      <Button label="Entrar" onPress={handlePregnentInfo} />
     </VStack>
   );
 };

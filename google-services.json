@@ -1,0 +1,46 @@
+{
+  "project_info": {
+    "project_number": "170476400042",
+    "project_id": "ondasdeparto",
+    "storage_bucket": "ondasdeparto.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:170476400042:android:df1d4036ab97b6c645cfd3",
+        "android_client_info": {
+          "package_name": "com.ondasdeparto"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "170476400042-eqla19o6ectnq7k1mf4f486uia7o7rtp.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAjmDUsra73k5F7LIRiX3tgIJOyKtVIS_4"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "170476400042-eqla19o6ectnq7k1mf4f486uia7o7rtp.apps.googleusercontent.com",
+              "client_type": 3
+            },
+            {
+              "client_id": "170476400042-vkipcnd0pjurhc44pgkk2pkgk0rnkq94.apps.googleusercontent.com",
+              "client_type": 2,
+              "ios_info": {
+                "bundle_id": "com.ondasdeparto"
+              }
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

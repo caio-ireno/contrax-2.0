@@ -6,7 +6,7 @@ import {
   useState,
 } from "react";
 import { BASETHEME, DARKTHEME } from "../theme";
-import { Box, NativeBaseProvider } from "native-base";
+import { Box, NativeBaseProvider, StatusBar } from "native-base";
 
 interface ThemeContextProps {
   themeName: "base" | "dark";
@@ -40,9 +40,12 @@ export const AppThemeProvider: React.FC<AppThemeProviderProps> = ({
   return (
     <ThemeContext.Provider value={{ themeName, toggleTheme }}>
       <NativeBaseProvider theme={theme}>
-        <Box height={"100%"} backgroundColor={theme.colors.primary[300]}>
-          {children}
-        </Box>
+        <StatusBar
+          backgroundColor="transparent"
+          barStyle="dark-content"
+          translucent
+        />
+        <Box height={"100%"}>{children}</Box>
       </NativeBaseProvider>
     </ThemeContext.Provider>
   );

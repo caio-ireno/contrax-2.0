@@ -6,13 +6,13 @@ import {
   Roboto_400Regular,
   Roboto_700Bold,
 } from "@expo-google-fonts/roboto";
-import { Contractions } from "./src/screens/Contractions";
+import { Routes } from "./src/routes";
 
 export default function App() {
   const [fontsLoaded] = useFonts({ Roboto_400Regular, Roboto_700Bold });
   return (
     <AppThemeProvider>
-      {fontsLoaded ? <Contractions /> : <Loading />}
+      {fontsLoaded ? <Routes /> : <Loading />}
     </AppThemeProvider>
   );
 }
