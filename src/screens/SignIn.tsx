@@ -21,7 +21,7 @@ export function SignIn() {
     if (!email || !password) {
       return Alert.alert("Entrar", "Digite um email e uma senha");
     }
-    setIsLoading(true);
+    setIsLoading(false);
 
     auth()
       .signInWithEmailAndPassword(email, password)
@@ -40,7 +40,8 @@ export function SignIn() {
           return Alert.alert("Entrar", "E-mail ou Senha inválido.");
         }
         return Alert.alert("Entrar", "Não foi possível acessar");
-      });
+      })
+      .then(() => console.log("entrou"));
   };
 
   const handleCreateAccount = () => {

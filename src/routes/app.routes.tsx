@@ -4,9 +4,22 @@ import { Ajuda } from "../screens/Ajuda";
 import { BolsaRota } from "../screens/BolsaRota";
 import { ClockCounterClockwise, Question, Baby } from "phosphor-react-native";
 import { useTheme } from "native-base";
-
+interface Gestante {
+  id: string;
+  name: string;
+  contracoes: Array<{
+    id: number;
+    duration: string;
+    hour: string;
+    frequency: string;
+  }>;
+  bolsa: {
+    coloracao: string;
+    horario: string;
+  };
+}
 const { Navigator, Screen } = createBottomTabNavigator();
-export const AppRoutes = () => {
+export const AppRoutes = ({ gestante }: { gestante: Gestante | null }) => {
   const { colors } = useTheme();
   return (
     <Navigator
@@ -21,11 +34,13 @@ export const AppRoutes = () => {
         name="contração"
         component={Contractions}
         options={{ tabBarIcon: ClockCounterClockwise }}
+        initialParams={{ gestante }}
       />
       <Screen
         name="bolsaRota"
         component={BolsaRota}
         options={{ tabBarIcon: Baby }}
+        initialParams={{ gestante }}
       />
       <Screen
         name="ajuda"

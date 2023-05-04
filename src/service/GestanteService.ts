@@ -33,9 +33,9 @@ type Gestantes = {
   data: GestanteProps[]
 }
 
-const getAllContractions = async (): Promise<Contractions | Error> => {
+const getAllContractions = async (uuid: string): Promise<Contractions | Error> => {
   try {
-    const urlRelativa = "/contractions"
+    const urlRelativa = `/gestantes/${uuid}`
     const { data } = await Api.get(urlRelativa)
 
     if (data) {
@@ -80,7 +80,7 @@ const create = async (
 }
 
 export const ContractionsServices = {
-  getAll,
+  getAllContractions,
   create,
   deleteAll,
 }

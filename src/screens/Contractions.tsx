@@ -2,10 +2,20 @@ import React from "react";
 import { ButtonCopy } from "../components/ButtonCopy";
 import { HStack, Button as NativeBaseButton, Text, VStack } from "native-base";
 import { TableList } from "../components/TableList";
-
 import { useContraction } from "../hooks/useContraction";
+import { RouteProp } from "@react-navigation/native";
+import { RootParamList } from "../types/navigation";
 
-export const Contractions = () => {
+interface Props {
+  route: RouteProp<RootParamList, "contração">;
+  Gestante: {
+    id: string;
+    name: string;
+  };
+}
+
+export const Contractions = ({ route }: Props) => {
+  const gestante = route.params.gestante;
   const {
     seconds,
     minutes,
@@ -27,7 +37,8 @@ export const Contractions = () => {
       pb={4}
       backgroundColor={"primary.300"}
     >
-      <ButtonCopy mb={4} />
+      <ButtonCopy idName={gestante.id} />
+      <ButtonCopy idName={gestante.name} />
       <NativeBaseButton
         bg="secondary.700"
         width={"full"}
@@ -36,6 +47,7 @@ export const Contractions = () => {
         onPress={isActive ? stopTimer : startTime}
         mb={2}
         borderRadius={10}
+        mt={3}
       >
         <Text fontFamily={"body"} fontSize={32}>
           {isActive

@@ -7,7 +7,7 @@
     "android": "expo run:android",
     "ios": "expo run:ios",
     "web": "expo start --web",
-    "mock": "json-server -w -H 192.168.0.182 -p 3333 ./mock/db.json"
+    "mock": "json-server -w -H 192.168.0.182 -p 3333 ./mock/db.json --routes ./mock/routes.json"
   },
   "dependencies": {
     "@expo-google-fonts/roboto": "^0.2.3",
