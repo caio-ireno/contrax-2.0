@@ -1,46 +1,40 @@
 import { NavigationContainer } from "@react-navigation/native";
-import { AppRoutes } from "./app.routes";
+import { AppRoutes } from "./gestante.routes";
 import auth, { FirebaseAuthTypes } from "@react-native-firebase/auth";
 import { useState, useEffect } from "react";
 import { LoginRoutes } from "./login.routes";
 import { getGestante } from "../firebase services/GetGestante";
+import { Gestante } from "../firebase services/InterfaceGestante";
+import GestanteContext from "../context/GestanteContext";
+import useContraction from "../hooks/useContraction";
 
-interface Gestante {
-  id: string;
-  name: string;
-  contracoes: Array<{
-    id: number;
-    duration: string;
-    hour: string;
-    frequency: string;
-  }>;
-  bolsa: {
-    coloracao: string;
-    horario: string;
-  };
-}
 export const Routes = () => {
   const [loading, setLoading] = useState(true);
-  const [userActivi, setUserActivi] = useState<FirebaseAuthTypes.User>();
+  const [userAuth, setUserAuth] = useState<FirebaseAuthTypes.User>();
   const [gestante, setGestante] = useState<Gestante | null>(null);
 
   useEffect(() => {
     const subscriber = auth().onAuthStateChanged(async (user) => {
-      console.log(user);
       if (user) {
         const gestanteData = await getGestante(user.uid);
         setGestante(gestanteData);
       }
-      setUserActivi(user);
+      setUserAuth(user);
       setLoading(false);
     });
 
     return subscriber;
-  }, []);
+  }, [gestante]);
 
   return (
     <NavigationContainer>
-      {userActivi ? <AppRoutes gestante={gestante} /> : <LoginRoutes />}
+      {userAuth ? (
+        <GestanteContext.Provider value={{ gestante, setGestante }}>
+          <AppRoutes />
+        </GestanteContext.Provider>
+      ) : (
+        <LoginRoutes />
+      )}
     </NavigationContainer>
   );
 };

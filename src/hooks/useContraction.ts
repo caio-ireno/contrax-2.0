@@ -1,13 +1,15 @@
-import { useEffect, useState } from "react";
-import { ContractionProps, ContractionsServices } from "../service/ContractionsService";
+import { useContext, useEffect, useState } from "react";
 import { useDebounce } from "./UseDebounce";
+import GestanteContext from "../context/GestanteContext";
+import firestore from '@react-native-firebase/firestore'
+import { Gestante } from "../firebase services/InterfaceGestante";
+
 
 interface ContractionHook {
   seconds: number;
   minutes: number;
   freqSeconds: number;
   freqMinutes: number;
-  rows: ContractionProps[],
   isActive: boolean;
   handleDelete: () => void;
   startTime: () => void;
@@ -15,6 +17,8 @@ interface ContractionHook {
 }
 
 export const useContraction = (): ContractionHook => {
+  const { gestante } = useContext(GestanteContext);
+
   const [customInterval, SetCustomInterval] = useState<NodeJS.Timer>();
   const [customIntervalFreq, SetCustomIntervalFreq] = useState<NodeJS.Timer>();
   const [seconds, SetSeconds] = useState(0);
@@ -29,21 +33,7 @@ export const useContraction = (): ContractionHook => {
   const [isActive, setIsActive] = useState(false); //altera o estado do botão para multi função
 
   const [render, setRender] = useState(false); //Da um re render na tabela
-  const [rows, setRows] = useState<ContractionProps[]>([]);
-  const { debounce } = useDebounce();
 
-  useEffect(() => {
-    debounce(() => {
-      ContractionsServices.getAll().then((result) => {
-        if (result instanceof Error) {
-          alert(result.message);
-          return;
-        } else {
-          setRows(result.data);
-        }
-      });
-    });
-  }, [render]);
 
   function getCurrentHour() {
     const now = new Date();
@@ -121,20 +111,16 @@ export const useContraction = (): ContractionHook => {
     hour: string,
     frequency: string
   ) => {
-    return () => {
-      ContractionsServices.create({
-        duration,
-        hour,
-        frequency,
-      }).then((result) => {
-        if (result instanceof Error) {
-          alert(result.message);
-        } else {
-          setRender(!render);
-        }
+    return async () => {
+      const newContraction = { duration, hour, frequency };
+      const gestanteRef = firestore().collection('gestantes').doc(gestante.id);
+      await gestanteRef.update({
+        contracoes: firestore.FieldValue.arrayUnion(newContraction)
       });
+      setRender(!render)
     };
   };
+
 
   const handleCreateContraction = (
     durationMinutes: number,
@@ -167,9 +153,12 @@ export const useContraction = (): ContractionHook => {
 
   const handleDelete = async () => {
     try {
-      for (let i = 0; i < rows.length; i++) {
-        await ContractionsServices.deleteAll(rows[i].id);
-      }
+      const gestanteRef = firestore().collection('gestantes').doc(gestante?.id);
+      await gestanteRef.update({
+        contracoes: []
+      });
+
+      setRender(!render);
       alert("Registros Apagados com sucesso");
       setFreqMinutes(0);
       SetFreqSeconds(0);
@@ -188,12 +177,13 @@ export const useContraction = (): ContractionHook => {
     }
   };
 
+
+
   return {
     seconds,
     minutes,
     freqSeconds,
     freqMinutes,
-    rows,
     isActive,
     handleDelete,
     startTime,

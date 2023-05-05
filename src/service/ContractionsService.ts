@@ -1,6 +1,6 @@
 import { Api } from "./api/axios-config"
 
-export interface ContractionProps {
+interface ContractionProps {
   id: number
   hour: string;
   frequency: string;

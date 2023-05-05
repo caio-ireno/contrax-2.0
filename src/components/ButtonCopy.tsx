@@ -16,20 +16,20 @@ export const ButtonCopy: React.FC<ButtonProps> = ({ idName }) => {
       title: `Copiado ${randomEmoji}`,
       duration: 3000, // 3 seconds
       placement: "top",
-      backgroundColor: "secondary.700",
+      backgroundColor: "primary.400",
     });
   };
 
   return (
     <Button
-      bg="primary.700"
+      bg="primary.500"
       width={"full"}
       height={12}
-      _pressed={{ bgColor: "primary.500" }}
+      _pressed={{ bgColor: "primary.400" }}
       onPress={copyToClipboard}
     >
       <Text color="secondary.100" fontFamily={"body"} fontSize={16}>
-        ID:{idName}
+        Enviar código 🤰
       </Text>
     </Button>
   );

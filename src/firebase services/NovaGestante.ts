@@ -1,23 +1,11 @@
 import firestore from '@react-native-firebase/firestore'
 import auth from "@react-native-firebase/auth"
+import { Gestante } from './InterfaceGestante';
 
 
-interface NewGestante {
-  id: string
-  name: string;
-  contracoes: Array<{
-    id: number;
-    duration: string;
-    hour: string;
-    frequency: string;
-  }>;
-  bolsa: {
-    coloracao: string;
-    horario: string;
-  };
-}
 
-export const criarNovaGestante = async (email: string, password: string, nome: string): Promise<NewGestante> => {
+
+export const criarNovaGestante = async (email: string, password: string, nome: string): Promise<Gestante> => {
   try {
     // Cria um novo usuário com email e senha
     const userCredential = await auth()

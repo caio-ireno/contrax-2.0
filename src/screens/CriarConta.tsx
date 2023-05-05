@@ -23,8 +23,8 @@ export const CriarConta = () => {
     setIsLoading(true);
     criarNovaGestante(email, password, nome)
       .then((userCredential) => {
-        console.log(userCredential.uuid);
         setIsLoading(false);
+        console.log(userCredential.id);
       })
       .catch((error) => {
         console.log(error);

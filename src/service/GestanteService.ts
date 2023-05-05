@@ -1,6 +1,6 @@
 import { Api } from "./api/axios-config"
 
-export interface GestanteProps {
+interface GestanteProps {
   uuid: string;
   name: string;
   contractions: Array<{
@@ -15,14 +15,14 @@ export interface GestanteProps {
   };
 }
 
-export interface ListaContractionsProps {
+interface ListaContractionsProps {
   id: number
   duration: string;
   hour: string;
   frequency: string;
 }
 
-export interface ListaBolsaProps {
+interface ListaBolsaProps {
   coloracao: string
   horario: string
 }

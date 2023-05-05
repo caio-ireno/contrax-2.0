@@ -2,7 +2,8 @@ import { createNativeStackNavigator } from "@react-navigation/native-stack";
 import { CriarConta } from "../screens/CriarConta";
 import { SignIn } from "../screens/SignIn";
 import { Login } from "../screens/Login";
-import { Profissional } from "../screens/Profissional";
+import { Profissional } from "../screens/profissional/Profissional";
+import { GestanteInfo } from "../screens/profissional/GestanteInfo";
 
 const { Navigator, Screen } = createNativeStackNavigator();
 
@@ -13,6 +14,7 @@ export const LoginRoutes = () => {
       <Screen name="login" component={SignIn} />
       <Screen name="criarConta" component={CriarConta} />
       <Screen name="profissional" component={Profissional} />
+      <Screen name="gestanteInfo" component={GestanteInfo} />
     </Navigator>
   );
 };

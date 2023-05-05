@@ -1,28 +1,18 @@
-import React from "react";
+import React, { useContext, useEffect } from "react";
 import { ButtonCopy } from "../components/ButtonCopy";
 import { HStack, Button as NativeBaseButton, Text, VStack } from "native-base";
 import { TableList } from "../components/TableList";
 import { useContraction } from "../hooks/useContraction";
-import { RouteProp } from "@react-navigation/native";
-import { RootParamList } from "../types/navigation";
+import GestanteContext from "../context/GestanteContext";
 
-interface Props {
-  route: RouteProp<RootParamList, "contração">;
-  Gestante: {
-    id: string;
-    name: string;
-  };
-}
-
-export const Contractions = ({ route }: Props) => {
-  const gestante = route.params.gestante;
+export const Contractions = () => {
+  const { gestante, setGestante } = useContext(GestanteContext);
   const {
     seconds,
     minutes,
     freqSeconds,
     freqMinutes,
     isActive,
-    rows,
     handleDelete,
     startTime,
     stopTimer,
@@ -38,14 +28,13 @@ export const Contractions = ({ route }: Props) => {
       backgroundColor={"primary.300"}
     >
       <ButtonCopy idName={gestante.id} />
-      <ButtonCopy idName={gestante.name} />
       <NativeBaseButton
         bg="secondary.700"
         width={"full"}
         _pressed={{ bgColor: "secondary.900" }}
         height={24}
         onPress={isActive ? stopTimer : startTime}
-        mb={2}
+        mb={10}
         borderRadius={10}
         mt={3}
       >
@@ -57,7 +46,6 @@ export const Contractions = ({ route }: Props) => {
             : "Iniciar"}
         </Text>
       </NativeBaseButton>
-
       <NativeBaseButton
         bg="secondary.700"
         width={"full"}
@@ -70,7 +58,6 @@ export const Contractions = ({ route }: Props) => {
           Deletar tudo
         </Text>
       </NativeBaseButton>
-
       <Text fontFamily={"body"} fontSize={32}>
         {`${freqMinutes < 10 ? "0" + freqMinutes : freqMinutes}:${
           freqSeconds < 10 ? "0" + freqSeconds : freqSeconds
@@ -78,6 +65,7 @@ export const Contractions = ({ route }: Props) => {
       </Text>
 
       <HStack
+        borderTopRadius={5}
         px={4}
         width={"full"}
         alignItems={"center"}
@@ -95,7 +83,7 @@ export const Contractions = ({ route }: Props) => {
           Frequencia
         </Text>
       </HStack>
-      <TableList data={rows} />
+      <TableList data={gestante.contracoes} />
     </VStack>
   );
 };
