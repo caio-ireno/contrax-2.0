@@ -6,7 +6,6 @@ import { LoginRoutes } from "./login.routes";
 import { getGestante } from "../firebase services/GetGestante";
 import { Gestante } from "../firebase services/InterfaceGestante";
 import GestanteContext from "../context/GestanteContext";
-import useContraction from "../hooks/useContraction";
 
 export const Routes = () => {
   const [loading, setLoading] = useState(true);

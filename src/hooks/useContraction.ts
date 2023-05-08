@@ -1,8 +1,6 @@
 import { useContext, useEffect, useState } from "react";
-import { useDebounce } from "./UseDebounce";
 import GestanteContext from "../context/GestanteContext";
 import firestore from '@react-native-firebase/firestore'
-import { Gestante } from "../firebase services/InterfaceGestante";
 
 
 interface ContractionHook {
