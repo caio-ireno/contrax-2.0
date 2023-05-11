@@ -2,10 +2,8 @@ import React, { useContext, useEffect, useState } from "react";
 import { Box, ScrollView, Select, Text, VStack } from "native-base";
 import { Check } from "phosphor-react-native";
 import firestore from "@react-native-firebase/firestore";
+import { DateTimePickerAndroid } from "@react-native-community/datetimepicker";
 
-import { SelectedHour } from "../components/SelectedHour";
-import { Button } from "../components/Button";
-import { useContractionContext } from "../context/useContraction";
 import GestanteContext from "../context/GestanteContext";
 import { Gestante } from "../firebase services/InterfaceGestante";
 import { Input } from "../components/Input";
@@ -15,7 +13,6 @@ export const BolsaRota = () => {
   const [coloracao, setColoracao] = useState("");
 
   const { gestante } = useContext(GestanteContext);
-  const { handleDelete } = useContractionContext();
 
   const handleTextChange = (newText) => {
     // Formata a entrada do usuário
@@ -57,12 +54,6 @@ export const BolsaRota = () => {
         pt={24}
         pb={4}
       >
-        <Button
-          label="Deletar informações"
-          width={"full"}
-          onPress={handleDelete}
-          mb={5}
-        />
         <VStack>
           <Text fontFamily={"body"} fontSize={12}>
             Horario de rompimento
@@ -86,6 +77,7 @@ export const BolsaRota = () => {
             onChangeText={handleTextChange}
           />
         </VStack>
+
         <VStack width={"full"} mt={5}>
           <Text fontFamily={"body"} fontSize={12}>
             Coloração da bolsa

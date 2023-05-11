@@ -8,6 +8,7 @@ import { useContractionContext } from "../context/useContraction";
 
 export const Ajuda = () => {
   const { toggleTheme } = useAppThemeContext();
+  const { handleDelete } = useContractionContext();
 
   const handleLogout = () => {
     auth()
@@ -27,6 +28,12 @@ export const Ajuda = () => {
       pb={4}
       backgroundColor={"primary.300"}
     >
+      <Button
+        label="Deletar informações"
+        width={"full"}
+        onPress={handleDelete}
+        mb={5}
+      />
       <Button
         label="Sair da Conta"
         width={"full"}
