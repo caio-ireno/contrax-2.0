@@ -1,6 +1,7 @@
 import React from "react";
-import { Box, VStack } from "native-base";
+import { Box, Text, VStack } from "native-base";
 import { Gestante } from "../../firebase services/InterfaceGestante";
+import { TableList } from "../../components/TableList";
 
 interface GestanteInfoProps {
   route: {
@@ -20,7 +21,57 @@ export function GestanteInfo({ route }: GestanteInfoProps) {
       pt={24}
       backgroundColor={"primary.300"}
     >
-      <Box>{gestante.name}</Box>
+      <Box
+        width="full"
+        backgroundColor={"secondary.100"}
+        height={10}
+        borderWidth={0}
+        borderRadius={5}
+        fontFamily={"body"}
+        color={"primary.700"}
+        mb={5}
+        justifyContent={"center"}
+        alignItems={"center"}
+        flexDirection={"row"}
+      >
+        <Text fontWeight={"bold"}>Nome: </Text>
+        {gestante.name}
+      </Box>
+      <Box
+        width="full"
+        backgroundColor={"secondary.100"}
+        height={10}
+        borderWidth={0}
+        borderRadius={5}
+        fontFamily={"body"}
+        color={"primary.700"}
+        mb={5}
+        justifyContent={"center"}
+        alignItems={"center"}
+        flexDirection={"row"}
+      >
+        <Text fontWeight={"bold"}>Coloração: </Text>
+        {gestante.bolsa.coloracao}
+      </Box>
+
+      <Box
+        width="full"
+        backgroundColor={"secondary.100"}
+        height={10}
+        borderWidth={0}
+        borderRadius={5}
+        fontFamily={"body"}
+        color={"primary.700"}
+        mb={5}
+        justifyContent={"center"}
+        alignItems={"center"}
+        flexDirection={"row"}
+      >
+        <Text fontWeight={"bold"}>Horário: </Text>
+        {gestante.bolsa.horario}
+      </Box>
+
+      <TableList data={gestante.contracoes} />
     </VStack>
   );
 }

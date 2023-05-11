@@ -1,9 +1,8 @@
 import React, { useState } from "react";
-import { Box, Input, Text, VStack } from "native-base";
+import { Input, Text, VStack } from "native-base";
 
-export function SelectedHour() {
-  const [text, setText] = useState("");
-
+export function SelectedHour({ onHorario }) {
+  const [horario, setHorario] = useState("");
   const handleTextChange = (newText) => {
     // Formata a entrada do usuário
     const formattedText = newText
@@ -12,7 +11,8 @@ export function SelectedHour() {
       .replace(/^(.{2})/, "$1:");
 
     // Atualiza o estado do componente com a nova string formatada
-    setText(formattedText);
+    setHorario(formattedText);
+    onHorario(formattedText);
   };
 
   return (
@@ -35,7 +35,7 @@ export function SelectedHour() {
         textAlign={"center"}
         maxLength={5}
         width={"full"}
-        value={text}
+        value={horario}
         onChangeText={handleTextChange}
       />
     </VStack>

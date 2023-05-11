@@ -1,23 +1,51 @@
-import React, { useState } from "react";
+import React, { useContext, useEffect, useState } from "react";
 import { Box, ScrollView, Select, Text, VStack } from "native-base";
 import { Check } from "phosphor-react-native";
+import firestore from "@react-native-firebase/firestore";
 
 import { SelectedHour } from "../components/SelectedHour";
 import { Button } from "../components/Button";
 import { useContractionContext } from "../context/useContraction";
+import GestanteContext from "../context/GestanteContext";
+import { Gestante } from "../firebase services/InterfaceGestante";
+import { Input } from "../components/Input";
 
 export const BolsaRota = () => {
-  const [service, setService] = useState("");
-  const [hora, setHora] = useState("");
-  const [minuto, setMinuto] = useState("");
+  const [horario, setHorario] = useState("");
+  const [coloracao, setColoracao] = useState("");
+
+  const { gestante } = useContext(GestanteContext);
   const { handleDelete } = useContractionContext();
-  const setInfo = () => {
-    if (service === "transparente" || "amarelo") {
-      console.log("bolsa ruim");
-    } else {
-      console.log("bolsa boa");
-    }
+
+  const handleTextChange = (newText) => {
+    // Formata a entrada do usuário
+    const formattedText = newText
+      .replace(/[^0-9]/g, "")
+      .substring(0, 4)
+      .replace(/^(.{2})/, "$1:");
+
+    // Atualiza o estado do componente com a nova string formatada
+    setHorario(formattedText);
   };
+
+  useEffect(() => {}, []);
+
+  useEffect(() => {
+    if (coloracao === "" && horario === "") {
+      setColoracao(gestante.bolsa.coloracao);
+      setHorario(gestante.bolsa.horario);
+    } else {
+      const changeColorBolsaRota = async () => {
+        const NewBolsa: Partial<Gestante> = { bolsa: { coloracao, horario } };
+        const gestanteRef = firestore()
+          .collection("gestantes")
+          .doc(gestante.id);
+        await gestanteRef.update(NewBolsa);
+      };
+
+      changeColorBolsaRota();
+    }
+  }, [coloracao, horario, gestante.bolsa.coloracao, gestante.bolsa.horario]);
 
   return (
     <ScrollView backgroundColor={"primary.300"}>
@@ -35,7 +63,29 @@ export const BolsaRota = () => {
           onPress={handleDelete}
           mb={5}
         />
-        <SelectedHour />
+        <VStack>
+          <Text fontFamily={"body"} fontSize={12}>
+            Horario de rompimento
+          </Text>
+          <Input
+            backgroundColor={"secondary.100"}
+            placeholderTextColor={"primary.700"}
+            size={"md"}
+            borderWidth={0}
+            fontFamily={"body"}
+            color={"primary.700"}
+            _focus={{
+              borderWidth: 1,
+              borderColor: "secondary.700",
+              backgroundColor: "secondary.300",
+            }}
+            textAlign={"center"}
+            maxLength={5}
+            width={"full"}
+            value={horario}
+            onChangeText={handleTextChange}
+          />
+        </VStack>
         <VStack width={"full"} mt={5}>
           <Text fontFamily={"body"} fontSize={12}>
             Coloração da bolsa
@@ -44,20 +94,20 @@ export const BolsaRota = () => {
             placeholderTextColor={"black"}
             bgColor={"white"}
             width={"full"}
-            placeholder="Coloração da bolsa"
+            placeholder={coloracao !== "" ? coloracao : "Coloração da bolsa"}
             _selectedItem={{
               bg: "secondary.700",
               endIcon: <Check size="5" />,
             }}
             mt={1}
             onValueChange={(itemValue) => {
-              setService(itemValue), setInfo;
+              setColoracao(itemValue);
             }}
           >
             <Select.Item label="transparente" value="transparente" />
             <Select.Item label="Amarelo" value="Amarelo" />
             <Select.Item label="Marrom" value="Marrom" />
-            <Select.Item label="esverdeado " value="esverdeado" />
+            <Select.Item label="esverdeado " value="Esverdeado" />
           </Select>
         </VStack>
 
@@ -69,7 +119,7 @@ export const BolsaRota = () => {
           bolsa rota ou amniorrexe.
         </Text>
 
-        {service !== "transparente" && service !== "" && (
+        {coloracao !== "transparente" && coloracao !== "" && (
           <Box backgroundColor={"secondary.700"} p={4}>
             <Text fontFamily={"body"} textAlign={"justify"}>
               Se a sua bolsa amniótica apresentar uma coloração
@@ -85,7 +135,7 @@ export const BolsaRota = () => {
           </Box>
         )}
 
-        {service === "transparente" && (
+        {coloracao === "transparente" && (
           <Box backgroundColor={"secondary.700"} p={4}>
             <Text fontFamily={"body"} textAlign={"justify"}>
               Se a sua bolsa amniótica é transparente, isso é geralmente um
