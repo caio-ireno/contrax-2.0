@@ -3,12 +3,14 @@ import { Box, ScrollView, Select, Text, VStack } from "native-base";
 import { Check } from "phosphor-react-native";
 
 import { SelectedHour } from "../components/SelectedHour";
+import { Button } from "../components/Button";
+import { useContractionContext } from "../context/useContraction";
 
 export const BolsaRota = () => {
   const [service, setService] = useState("");
   const [hora, setHora] = useState("");
   const [minuto, setMinuto] = useState("");
-
+  const { handleDelete } = useContractionContext();
   const setInfo = () => {
     if (service === "transparente" || "amarelo") {
       console.log("bolsa ruim");
@@ -18,7 +20,7 @@ export const BolsaRota = () => {
   };
 
   return (
-    <ScrollView>
+    <ScrollView backgroundColor={"primary.300"}>
       <VStack
         flex={1}
         backgroundColor={"primary.300"}
@@ -27,10 +29,16 @@ export const BolsaRota = () => {
         pt={24}
         pb={4}
       >
+        <Button
+          label="Deletar informações"
+          width={"full"}
+          onPress={handleDelete}
+          mb={5}
+        />
         <SelectedHour />
         <VStack width={"full"} mt={5}>
           <Text fontFamily={"body"} fontSize={12}>
-            Horario de rompimento
+            Coloração da bolsa
           </Text>
           <Select
             placeholderTextColor={"black"}
@@ -61,7 +69,7 @@ export const BolsaRota = () => {
           bolsa rota ou amniorrexe.
         </Text>
 
-        {service !== "transparente" && (
+        {service !== "transparente" && service !== "" && (
           <Box backgroundColor={"secondary.700"} p={4}>
             <Text fontFamily={"body"} textAlign={"justify"}>
               Se a sua bolsa amniótica apresentar uma coloração
@@ -77,21 +85,24 @@ export const BolsaRota = () => {
           </Box>
         )}
 
-        <Box backgroundColor={"secondary.700"} p={4}>
-          <Text fontFamily={"body"} textAlign={"justify"}>
-            Se a sua bolsa amniótica é transparente, isso é geralmente um sinal
-            positivo de que a gestação está progredindo normalmente. A bolsa
-            amniótica é uma membrana que envolve o bebê e o líquido amniótico,
-            oferecendo proteção e nutrição ao feto durante o desenvolvimento na
-            barriga da mãe. A transparência da bolsa amniótica indica que o
-            líquido está limpo e que o bebê está saudável. No entanto, é
-            importante lembrar que cada gestação é única e que é sempre
-            recomendado fazer o acompanhamento médico adequado para garantir a
-            saúde e segurança da mãe e do bebê. Se você tiver qualquer dúvida ou
-            preocupação em relação à sua bolsa amniótica ou à gestação em geral,
-            não hesite em procurar atendimento médico.
-          </Text>
-        </Box>
+        {service === "transparente" && (
+          <Box backgroundColor={"secondary.700"} p={4}>
+            <Text fontFamily={"body"} textAlign={"justify"}>
+              Se a sua bolsa amniótica é transparente, isso é geralmente um
+              sinal positivo de que a gestação está progredindo normalmente. A
+              bolsa amniótica é uma membrana que envolve o bebê e o líquido
+              amniótico, oferecendo proteção e nutrição ao feto durante o
+              desenvolvimento na barriga da mãe. A transparência da bolsa
+              amniótica indica que o líquido está limpo e que o bebê está
+              saudável. No entanto, é importante lembrar que cada gestação é
+              única e que é sempre recomendado fazer o acompanhamento médico
+              adequado para garantir a saúde e segurança da mãe e do bebê. Se
+              você tiver qualquer dúvida ou preocupação em relação à sua bolsa
+              amniótica ou à gestação em geral, não hesite em procurar
+              atendimento médico.
+            </Text>
+          </Box>
+        )}
       </VStack>
     </ScrollView>
   );

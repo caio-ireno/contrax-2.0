@@ -1,14 +1,13 @@
 import React from "react";
-import { Box, VStack } from "native-base";
+import { Box, Text, VStack } from "native-base";
 import auth from "@react-native-firebase/auth";
 import { Alert } from "react-native";
-import useContraction from "../hooks/useContraction";
 import { Button } from "../components/Button";
 import { useAppThemeContext } from "../context/ThemeContext";
+import { useContractionContext } from "../context/useContraction";
 
 export const Ajuda = () => {
   const { toggleTheme } = useAppThemeContext();
-  const { handleDelete } = useContraction();
 
   const handleLogout = () => {
     auth()
@@ -34,13 +33,6 @@ export const Ajuda = () => {
         onPress={handleLogout}
         mb={5}
       />
-      <Button
-        label="Deletar informações"
-        width={"full"}
-        onPress={handleDelete}
-        mb={5}
-      />
-
       <Button label="Trocar tema do App" width={"full"} onPress={toggleTheme} />
     </VStack>
   );

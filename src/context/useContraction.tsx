@@ -1,7 +1,6 @@
-import { useContext, useEffect, useState } from "react";
-import GestanteContext from "../context/GestanteContext";
-import firestore from '@react-native-firebase/firestore'
-
+import { createContext, useContext, useState } from "react";
+import GestanteContext from "./GestanteContext";
+import firestore from "@react-native-firebase/firestore";
 
 interface ContractionHook {
   seconds: number;
@@ -14,7 +13,28 @@ interface ContractionHook {
   stopTimer: () => void;
 }
 
-export const useContraction = (): ContractionHook => {
+interface AppThemeProviderProps {
+  children: React.ReactNode;
+}
+
+const ContractionContext = createContext<ContractionHook>({
+  seconds: 0,
+  minutes: 0,
+  freqSeconds: 0,
+  freqMinutes: 0,
+  isActive: false,
+  handleDelete: () => {},
+  startTime: () => {},
+  stopTimer: () => {},
+});
+
+export const useContractionContext = () => {
+  return useContext(ContractionContext);
+};
+
+export const AppContraction: React.FC<AppThemeProviderProps> = ({
+  children,
+}) => {
   const { gestante } = useContext(GestanteContext);
 
   const [customInterval, SetCustomInterval] = useState<NodeJS.Timer>();
@@ -29,9 +49,6 @@ export const useContraction = (): ContractionHook => {
   const [DurationFreqMinutes, setDurationFreqMinutes] = useState(0);
 
   const [isActive, setIsActive] = useState(false); //altera o estado do botão para multi função
-
-  const [render, setRender] = useState(false); //Da um re render na tabela
-
 
   function getCurrentHour() {
     const now = new Date();
@@ -111,37 +128,35 @@ export const useContraction = (): ContractionHook => {
   ) => {
     return async () => {
       const newContraction = { duration, hour, frequency };
-      const gestanteRef = firestore().collection('gestantes').doc(gestante.id);
+      const gestanteRef = firestore().collection("gestantes").doc(gestante.id);
       await gestanteRef.update({
-        contracoes: firestore.FieldValue.arrayUnion(newContraction)
+        contracoes: firestore.FieldValue.arrayUnion(newContraction),
       });
-      setRender(!render)
     };
   };
-
 
   const handleCreateContraction = (
     durationMinutes: number,
     durationSeconds: number
   ) => {
-    let frequency = ''
+    let frequency = "";
     if (DurationFreqSeconds === 0) {
-      frequency = '--:--'
+      frequency = "--:--";
     } else {
-
       const durationSecond = durationMinutes * 60 + durationSeconds;
       const freqSecond = DurationFreqMinutes * 60 + DurationFreqSeconds;
       const totalSeconds = freqSecond + durationSecond;
       const newFreqSeconds = totalSeconds % 60;
       const newFreqMinutes = freqMinutes + Math.floor(totalSeconds / 60);
 
-      frequency = `${newFreqMinutes < 10 ? "0" + newFreqMinutes : newFreqMinutes
-        }:${newFreqSeconds < 10 ? "0" + newFreqSeconds : newFreqSeconds}`;
+      frequency = `${
+        newFreqMinutes < 10 ? "0" + newFreqMinutes : newFreqMinutes
+      }:${newFreqSeconds < 10 ? "0" + newFreqSeconds : newFreqSeconds}`;
     }
 
-
-    const duration = `${durationMinutes < 10 ? "0" + durationMinutes : durationMinutes
-      }:${durationSeconds < 10 ? "0" + durationSeconds : durationSeconds}`;
+    const duration = `${
+      durationMinutes < 10 ? "0" + durationMinutes : durationMinutes
+    }:${durationSeconds < 10 ? "0" + durationSeconds : durationSeconds}`;
 
     const hour = getCurrentHour();
 
@@ -151,42 +166,43 @@ export const useContraction = (): ContractionHook => {
 
   const handleDelete = async () => {
     try {
-      const gestanteRef = firestore().collection('gestantes').doc(gestante?.id);
+      const gestanteRef = firestore().collection("gestantes").doc(gestante?.id);
       await gestanteRef.update({
-        contracoes: []
+        contracoes: [],
       });
 
-      setRender(!render);
-      alert("Registros Apagados com sucesso");
       setFreqMinutes(0);
       SetFreqSeconds(0);
       setMinutes(0);
       SetSeconds(0);
       setIsActive(false);
-      setRender(!render);
       if (customIntervalFreq) {
         clearInterval(customIntervalFreq);
       }
       if (customInterval) {
         clearInterval(customInterval);
       }
+      console.log("delete do useContraction");
+      alert("Registros Apagados com sucesso");
     } catch (error) {
       alert(error.message || "Erro ao apagar registros");
     }
   };
 
-
-
-  return {
-    seconds,
-    minutes,
-    freqSeconds,
-    freqMinutes,
-    isActive,
-    handleDelete,
-    startTime,
-    stopTimer,
-  }
-}
-
-export default useContraction;
+  return (
+    <ContractionContext.Provider
+      value={{
+        seconds,
+        minutes,
+        freqSeconds,
+        freqMinutes,
+        isActive,
+        handleDelete,
+        startTime,
+        stopTimer,
+      }}
+    >
+      {children}
+    </ContractionContext.Provider>
+  );
+};
