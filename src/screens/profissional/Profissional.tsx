@@ -4,9 +4,9 @@ import { Button } from "../../components/Button";
 import { useNavigation } from "@react-navigation/native";
 import { Input } from "../../components/Input";
 import { useState } from "react";
-import firestore from "@react-native-firebase/firestore";
 import { getGestante } from "../../firebase services/GetGestante";
 import { Gestante } from "../../firebase services/InterfaceGestante";
+import { Alert } from "react-native";
 
 export const Profissional = () => {
   const [gestanteId, setGestanteId] = useState("");
@@ -15,9 +15,13 @@ export const Profissional = () => {
   const navigation = useNavigation();
 
   const handlePregnentInfo = async () => {
-    const gestanteData = await getGestante(gestanteId);
-    setGestante(gestanteData);
-    navigation.navigate("gestanteInfo", { gestante: gestanteData });
+    if (gestanteId) {
+      const gestanteData = await getGestante(gestanteId);
+      setGestante(gestanteData);
+      navigation.navigate("gestanteInfo", { gestante: gestanteData });
+    } else {
+      return Alert.alert("Login", "Insira um ID valido");
+    }
   };
 
   return (

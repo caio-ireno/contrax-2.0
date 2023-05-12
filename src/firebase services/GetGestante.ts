@@ -1,5 +1,6 @@
 import firestore from '@react-native-firebase/firestore';
 import { Gestante } from './InterfaceGestante';
+import { Alert } from 'react-native';
 
 
 export const getGestante = async (userId: string): Promise<Gestante> => {
@@ -19,6 +20,7 @@ export const getGestante = async (userId: string): Promise<Gestante> => {
         bolsa: gestanteData.bolsa,
       }
     } else {
+      Alert.alert('login', `Documento da gestante com userId não encontrado`);
       throw new Error(`Documento da gestante com userId ${userId} não encontrado`);
     }
   } catch (error) {
