@@ -24,9 +24,10 @@ export const ButtonCopy: React.FC<ButtonProps> = ({ idName }) => {
     <Button
       bg="primary.500"
       width={"full"}
-      height={12}
+      height={16}
       _pressed={{ bgColor: "primary.400" }}
       onPress={copyToClipboard}
+      borderRadius={12}
     >
       <Text color="secondary.100" fontFamily={"body"} fontSize={16}>
         Enviar código 🤰

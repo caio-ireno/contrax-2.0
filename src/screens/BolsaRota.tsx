@@ -2,7 +2,6 @@ import React, { useContext, useEffect, useState } from "react";
 import { Box, ScrollView, Select, Text, VStack } from "native-base";
 import { Check } from "phosphor-react-native";
 import firestore from "@react-native-firebase/firestore";
-import { DateTimePickerAndroid } from "@react-native-community/datetimepicker";
 
 import GestanteContext from "../context/GestanteContext";
 import { Gestante } from "../firebase services/InterfaceGestante";
@@ -51,8 +50,8 @@ export const BolsaRota = () => {
         backgroundColor={"primary.300"}
         alignItems={"center"}
         px={8}
-        pt={24}
-        pb={4}
+        pt={16}
+        pb={6}
       >
         <VStack>
           <Text fontFamily={"body"} fontSize={12}>
@@ -78,7 +77,7 @@ export const BolsaRota = () => {
           />
         </VStack>
 
-        <VStack width={"full"} mt={5}>
+        <VStack width={"full"} mt={6}>
           <Text fontFamily={"body"} fontSize={12}>
             Coloração da bolsa
           </Text>
@@ -103,7 +102,7 @@ export const BolsaRota = () => {
           </Select>
         </VStack>
 
-        <Text fontFamily={"body"} mt={5} textAlign={"justify"} p={4}>
+        <Text fontFamily={"body"} mt={4} textAlign={"justify"} p={4}>
           Naturalmente, a bolsa se rompe durante o trabalho de parto ou próximo
           das 39 semanas e não há problema nesses casos. No entanto, quando esse
           rompimento acontece antes da gestante iniciar o trabalho de parto ou,

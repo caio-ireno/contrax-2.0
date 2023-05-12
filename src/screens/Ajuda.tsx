@@ -16,7 +16,8 @@ export const Ajuda = () => {
       .catch((error) => {
         console.log(error);
         return Alert.alert("logout", "Não foi possivel sair");
-      });
+      })
+      .then(() => console.log("saiu"));
   };
 
   return (

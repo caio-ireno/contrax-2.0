@@ -11,6 +11,7 @@ interface ContractionHook {
   handleDelete: () => void;
   startTime: () => void;
   stopTimer: () => void;
+  handleDeleteId: (id: number) => void;
 }
 
 interface AppThemeProviderProps {
@@ -26,6 +27,7 @@ const ContractionContext = createContext<ContractionHook>({
   handleDelete: () => {},
   startTime: () => {},
   stopTimer: () => {},
+  handleDeleteId: () => {},
 });
 
 export const useContractionContext = () => {
@@ -41,6 +43,7 @@ export const AppContraction: React.FC<AppThemeProviderProps> = ({
   const [customIntervalFreq, SetCustomIntervalFreq] = useState<NodeJS.Timer>();
   const [seconds, SetSeconds] = useState(0);
   const [minutes, setMinutes] = useState(0);
+  const [id, setId] = useState(0);
 
   const [freqSeconds, SetFreqSeconds] = useState(0);
   const [freqMinutes, setFreqMinutes] = useState(0);
@@ -124,10 +127,11 @@ export const AppContraction: React.FC<AppThemeProviderProps> = ({
   const createContraction = (
     duration: string,
     hour: string,
-    frequency: string
+    frequency: string,
+    id: number
   ) => {
     return async () => {
-      const newContraction = { duration, hour, frequency };
+      const newContraction = { duration, hour, frequency, id };
       const gestanteRef = firestore().collection("gestantes").doc(gestante.id);
       await gestanteRef.update({
         contracoes: firestore.FieldValue.arrayUnion(newContraction),
@@ -141,7 +145,6 @@ export const AppContraction: React.FC<AppThemeProviderProps> = ({
   ) => {
     let frequency = "";
     if (DurationFreqSeconds === 0) {
-      frequency = "--:--";
     } else {
       const durationSecond = durationMinutes * 60 + durationSeconds;
       const freqSecond = DurationFreqMinutes * 60 + DurationFreqSeconds;
@@ -160,8 +163,34 @@ export const AppContraction: React.FC<AppThemeProviderProps> = ({
 
     const hour = getCurrentHour();
 
-    const createNewContraction = createContraction(duration, hour, frequency);
+    setId(id + 1);
+
+    const createNewContraction = createContraction(
+      duration,
+      hour,
+      frequency,
+      id
+    );
     createNewContraction();
+  };
+
+  const handleDeleteId = async (id: number) => {
+    console.log(id);
+    let updateContracao = [];
+    gestante.contracoes.map((contracao) => {
+      if (contracao.id != id) {
+        updateContracao.push(contracao);
+      }
+    });
+    console.log(updateContracao);
+    try {
+      const gestanteRef = firestore().collection("gestantes").doc(gestante?.id);
+      await gestanteRef.update({
+        contracoes: updateContracao,
+      });
+    } catch (error) {
+      alert(error.message || "Erro ao apagar registros");
+    }
   };
 
   const handleDelete = async () => {
@@ -170,6 +199,7 @@ export const AppContraction: React.FC<AppThemeProviderProps> = ({
       await gestanteRef.update({
         contracoes: [],
       });
+      setId(0);
 
       setFreqMinutes(0);
       SetFreqSeconds(0);
@@ -200,6 +230,7 @@ export const AppContraction: React.FC<AppThemeProviderProps> = ({
         handleDelete,
         startTime,
         stopTimer,
+        handleDeleteId,
       }}
     >
       {children}

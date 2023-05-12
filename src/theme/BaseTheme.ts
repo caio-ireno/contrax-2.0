@@ -15,7 +15,7 @@ export const BASETHEME = extendTheme({
     },
     secondary: {
       100: '#fffffc',
-      200: '#F8F0E3',
+      200: '#fceeee',
       300: '#FDEBED',
       400: '#F9D9C2',
       500: '#F4BE8D',
@@ -27,8 +27,9 @@ export const BASETHEME = extendTheme({
 
   },
   fonts: {
-    body: 'Roboto_400Regular',
-    bold: 'Roboto_700Bold'
+    body: 'Signika_400Regular',
+    bold: 'Signika_600SemiBold'
   }
+
 
 })

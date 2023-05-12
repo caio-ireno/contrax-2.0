@@ -1,23 +1,31 @@
-import { HStack, Button as NativeBaseButton, Text, VStack } from "native-base";
+import {
+  Box,
+  HStack,
+  Icon,
+  Modal,
+  Button as NativeBaseButton,
+  Pressable,
+  Text,
+  VStack,
+} from "native-base";
 import GestanteContext from "../context/GestanteContext";
 import { ButtonCopy } from "../components/ButtonCopy";
-import { TableList } from "../components/TableList";
-import React, { useContext } from "react";
+import React, { useContext, useState } from "react";
 import { useContractionContext } from "../context/useContraction";
 
 export const Contractions = () => {
   const { gestante } = useContext(GestanteContext);
+  const [showDeleteModal, setShowDeleteModal] = useState(false);
+  const [selectedContracao, setSelectedContracao] = useState(0);
 
-  const {
-    freqMinutes,
-    freqSeconds,
-    handleDelete,
-    isActive,
-    minutes,
-    seconds,
-    stopTimer,
-    startTime,
-  } = useContractionContext();
+  const handleLongPress = (contracao: number) => {
+    setSelectedContracao(contracao);
+    setShowDeleteModal(true);
+    console.log("handle modal");
+  };
+
+  const { handleDeleteId, isActive, minutes, seconds, stopTimer, startTime } =
+    useContractionContext();
 
   return (
     <VStack
@@ -35,9 +43,9 @@ export const Contractions = () => {
         _pressed={{ bgColor: "secondary.900" }}
         height={24}
         onPress={isActive ? stopTimer : startTime}
-        mb={10}
-        borderRadius={10}
-        mt={3}
+        mb={6}
+        borderRadius={12}
+        mt={6}
       >
         <Text fontFamily={"body"} fontSize={32}>
           {isActive
@@ -48,32 +56,73 @@ export const Contractions = () => {
         </Text>
       </NativeBaseButton>
 
-      <Text fontFamily={"body"} fontSize={32}>
-        {`${freqMinutes < 10 ? "0" + freqMinutes : freqMinutes}:${
-          freqSeconds < 10 ? "0" + freqSeconds : freqSeconds
-        }`}
-      </Text>
+      {gestante.contracoes.map((contracao) => {
+        return (
+          <Pressable
+            width={"full"}
+            px={4}
+            py={2}
+            borderRadius={16}
+            mb={2}
+            backgroundColor={"secondary.100"}
+            _pressed={{ backgroundColor: "secondary.200" }}
+            onLongPress={() => handleLongPress(contracao.id)}
+          >
+            <HStack
+              style={{}}
+              justifyContent={"space-between"}
+              alignItems={"center"}
+              key={contracao.id}
+            >
+              <Text>{contracao.hour}</Text>
+              <VStack alignItems={"center"}>
+                <Text fontFamily={"bold"}>Duração</Text>
+                <Text>{contracao.duration}</Text>
+              </VStack>
+              <VStack alignItems={"center"}>
+                <Text fontFamily={"bold"}>Frequência</Text>
+                <Text>{contracao.frequency}</Text>
+              </VStack>
+            </HStack>
+          </Pressable>
+        );
+      })}
 
-      <HStack
-        borderTopRadius={5}
-        px={4}
-        width={"full"}
-        alignItems={"center"}
-        justifyContent={"space-between"}
-        backgroundColor={"secondary.100"}
-        height={10}
-      >
-        <Text fontFamily={"bold"} fontSize={16}>
-          Horário
-        </Text>
-        <Text fontFamily={"bold"} fontSize={16}>
-          Duração
-        </Text>
-        <Text fontFamily={"bold"} fontSize={16}>
-          Frequência
-        </Text>
-      </HStack>
-      <TableList data={gestante.contracoes} />
+      {showDeleteModal && (
+        <Modal
+          isOpen={showDeleteModal}
+          justifyContent="center"
+          alignItems="center"
+        >
+          <Box
+            p={6}
+            alignItems={"center"}
+            backgroundColor={"primary.400"}
+            width={"80%"}
+          >
+            <Text>Tem certeza que deseja excluir?</Text>
+            <NativeBaseButton
+              width={100}
+              mt={6}
+              onPress={() => setShowDeleteModal(false)}
+            >
+              Cancelar
+            </NativeBaseButton>
+            <NativeBaseButton
+              mt={6}
+              width={100}
+              onPress={() => {
+                handleDeleteId(selectedContracao);
+                setSelectedContracao(null);
+                setShowDeleteModal(false);
+              }}
+            >
+              Excluir
+            </NativeBaseButton>
+          </Box>
+        </Modal>
+      )}
+      {/* <TableList data={gestante.contracoes} /> */}
     </VStack>
   );
 };

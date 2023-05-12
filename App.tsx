@@ -3,13 +3,18 @@ import { AppThemeProvider } from "./src/context/ThemeContext";
 import { Login } from "./src/screens/Login";
 import {
   useFonts,
-  Roboto_400Regular,
-  Roboto_700Bold,
-} from "@expo-google-fonts/roboto";
+  Signika_400Regular,
+  Signika_500Medium,
+  Signika_600SemiBold,
+} from "@expo-google-fonts/signika";
 import { Routes } from "./src/routes";
 
 export default function App() {
-  const [fontsLoaded] = useFonts({ Roboto_400Regular, Roboto_700Bold });
+  const [fontsLoaded] = useFonts({
+    Signika_400Regular,
+    Signika_500Medium,
+    Signika_600SemiBold,
+  });
   return (
     <AppThemeProvider>
       {fontsLoaded ? <Routes /> : <Loading />}
