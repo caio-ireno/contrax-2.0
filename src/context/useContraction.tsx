@@ -132,10 +132,28 @@ export const AppContraction: React.FC<AppThemeProviderProps> = ({
   ) => {
     return async () => {
       const newContraction = { duration, hour, frequency, id };
-      const gestanteRef = firestore().collection("gestantes").doc(gestante.id);
-      await gestanteRef.update({
-        contracoes: firestore.FieldValue.arrayUnion(newContraction),
-      });
+
+      try {
+        const gestanteRef = firestore()
+          .collection("gestantes")
+          .doc(gestante.id);
+
+        const gestanteDoc = await gestanteRef.get();
+        const gestanteData = gestanteDoc.data();
+
+        let id = 0;
+        do {
+          id = Math.floor(Math.random() * 10000);
+        } while (id === gestanteData.contracoes); // Verifique se o ID já existe no array
+
+        newContraction.id = id;
+
+        await gestanteRef.update({
+          contracoes: firestore.FieldValue.arrayUnion(newContraction),
+        });
+      } catch (error) {
+        alert(error.message || "Erro ao criar uma nova contração");
+      }
     };
   };
 
