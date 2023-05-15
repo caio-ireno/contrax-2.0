@@ -141,7 +141,6 @@ export const AppContraction: React.FC<AppThemeProviderProps> = ({
         const gestanteDoc = await gestanteRef.get();
         const gestanteData = gestanteDoc.data();
 
-        let id = 0;
         do {
           id = Math.floor(Math.random() * 10000);
         } while (id === gestanteData.contracoes); // Verifique se o ID já existe no array
@@ -180,8 +179,6 @@ export const AppContraction: React.FC<AppThemeProviderProps> = ({
     }:${durationSeconds < 10 ? "0" + durationSeconds : durationSeconds}`;
 
     const hour = getCurrentHour();
-
-    setId(id + 1);
 
     const createNewContraction = createContraction(
       duration,
