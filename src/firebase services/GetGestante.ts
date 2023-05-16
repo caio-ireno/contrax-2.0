@@ -14,10 +14,11 @@ export const getGestante = async (userId: string): Promise<Gestante> => {
       const gestanteDoc = gestanteQuery.docs[0];
       const gestanteData = gestanteDoc.data();
       return {
-        id: gestanteDoc.id,
+        id: gestanteData.userId,
         name: gestanteData.name,
         contracoes: gestanteData.contracoes,
         bolsa: gestanteData.bolsa,
+
       }
     } else {
       Alert.alert('login', `Documento da gestante com userId não encontrado`);
