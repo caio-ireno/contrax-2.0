@@ -24,19 +24,21 @@ export const BolsaRota = () => {
     setHorario(formattedText);
   };
 
-  useEffect(() => {}, []);
-
   useEffect(() => {
     if (coloracao === "" && horario === "") {
       setColoracao(gestante.bolsa.coloracao);
       setHorario(gestante.bolsa.horario);
     } else {
       const changeColorBolsaRota = async () => {
-        const NewBolsa: Partial<Gestante> = { bolsa: { coloracao, horario } };
-        const gestanteRef = firestore()
-          .collection("gestantes")
-          .doc(gestante.id);
-        await gestanteRef.update(NewBolsa);
+        try {
+          const NewBolsa: Partial<Gestante> = { bolsa: { coloracao, horario } };
+          const gestanteRef = firestore()
+            .collection("gestantes")
+            .doc(gestante.gestanteId);
+          await gestanteRef.update(NewBolsa);
+        } catch (error) {
+          console.log(error);
+        }
       };
 
       changeColorBolsaRota();
@@ -54,7 +56,7 @@ export const BolsaRota = () => {
         pb={6}
       >
         <VStack>
-          <Text fontFamily={"body"} fontSize={12}>
+          <Text color="primary" fontFamily={"body"} fontSize={12}>
             Horario de rompimento
           </Text>
           <Input
@@ -62,6 +64,7 @@ export const BolsaRota = () => {
             placeholderTextColor={"primary.700"}
             size={"md"}
             borderWidth={0}
+            borderRadius={15}
             fontFamily={"body"}
             color={"primary.700"}
             _focus={{
@@ -71,6 +74,7 @@ export const BolsaRota = () => {
             }}
             textAlign={"center"}
             maxLength={5}
+            mt={1}
             width={"full"}
             value={horario}
             onChangeText={handleTextChange}
@@ -82,6 +86,7 @@ export const BolsaRota = () => {
             Coloração da bolsa
           </Text>
           <Select
+            borderRadius={15}
             placeholderTextColor={"black"}
             bgColor={"white"}
             width={"full"}
@@ -102,16 +107,25 @@ export const BolsaRota = () => {
           </Select>
         </VStack>
 
-        <Text fontFamily={"body"} mt={4} textAlign={"justify"} p={4}>
-          Naturalmente, a bolsa se rompe durante o trabalho de parto ou próximo
-          das 39 semanas e não há problema nesses casos. No entanto, quando esse
-          rompimento acontece antes da gestante iniciar o trabalho de parto ou,
-          pelo menos, estar próxima da reta final da gravidez, é chamada de
-          bolsa rota ou amniorrexe.
-        </Text>
+        <Box borderRadius={15} backgroundColor={"secondary.100"} p={4} mt={4}>
+          <Text fontFamily={"body"} textAlign={"justify"}>
+            Naturalmente, a bolsa se rompe durante o trabalho de parto ou
+            próximo das 39 semanas e não há problema nesses casos. No entanto,
+            quando esse rompimento acontece antes da gestante iniciar o trabalho
+            de parto ou, pelo menos, estar próxima da reta final da gravidez, é
+            chamada de bolsa rota ou amniorrexe.
+          </Text>
+        </Box>
 
         {coloracao !== "transparente" && coloracao !== "" && (
-          <Box backgroundColor={"secondary.700"} p={4}>
+          <Box
+            borderRadius={15}
+            borderWidth={1}
+            borderColor={"red.500"}
+            backgroundColor={"red.100"}
+            p={4}
+            mt={4}
+          >
             <Text fontFamily={"body"} textAlign={"justify"}>
               Se a sua bolsa amniótica apresentar uma coloração
               amarelo-esverdeada, é importante buscar atendimento médico
@@ -127,7 +141,14 @@ export const BolsaRota = () => {
         )}
 
         {coloracao === "transparente" && (
-          <Box backgroundColor={"secondary.700"} p={4}>
+          <Box
+            borderRadius={15}
+            borderWidth={1}
+            borderColor={"emerald.500"}
+            backgroundColor={"emerald.100"}
+            p={4}
+            mt={4}
+          >
             <Text fontFamily={"body"} textAlign={"justify"}>
               Se a sua bolsa amniótica é transparente, isso é geralmente um
               sinal positivo de que a gestação está progredindo normalmente. A

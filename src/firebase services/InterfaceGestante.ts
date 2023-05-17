@@ -1,4 +1,5 @@
 export interface Gestante {
+  gestanteId: string
   id: string
   name: string;
   contracoes: Array<{

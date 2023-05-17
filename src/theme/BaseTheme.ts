@@ -24,12 +24,14 @@ export const BASETHEME = extendTheme({
       800: '#D98E8A',
       900: '#d4939d',
     },
+    text: {
+      primary: 'black',
+      secondary: 'white',
+    },
 
   },
   fonts: {
     body: 'Signika_400Regular',
     bold: 'Signika_600SemiBold'
   }
-
-
 })

@@ -136,7 +136,7 @@ export const AppContraction: React.FC<AppThemeProviderProps> = ({
       try {
         const gestanteRef = firestore()
           .collection("gestantes")
-          .doc(gestante.id);
+          .doc(gestante.gestanteId);
 
         const gestanteDoc = await gestanteRef.get();
         const gestanteData = gestanteDoc.data();
@@ -199,7 +199,9 @@ export const AppContraction: React.FC<AppThemeProviderProps> = ({
     });
     console.log(updateContracao);
     try {
-      const gestanteRef = firestore().collection("gestantes").doc(gestante?.id);
+      const gestanteRef = firestore()
+        .collection("gestantes")
+        .doc(gestante?.gestanteId);
       await gestanteRef.update({
         contracoes: updateContracao,
       });
@@ -210,7 +212,9 @@ export const AppContraction: React.FC<AppThemeProviderProps> = ({
 
   const handleDelete = async () => {
     try {
-      const gestanteRef = firestore().collection("gestantes").doc(gestante?.id);
+      const gestanteRef = firestore()
+        .collection("gestantes")
+        .doc(gestante?.gestanteId);
       await gestanteRef.update({
         contracoes: [],
       });

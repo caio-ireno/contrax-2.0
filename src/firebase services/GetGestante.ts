@@ -14,6 +14,7 @@ export const getGestante = async (userId: string): Promise<Gestante> => {
       const gestanteDoc = gestanteQuery.docs[0];
       const gestanteData = gestanteDoc.data();
       return {
+        gestanteId: gestanteDoc.id,
         id: gestanteData.userId,
         name: gestanteData.name,
         contracoes: gestanteData.contracoes,

@@ -59,6 +59,7 @@ export const Contractions = () => {
       {gestante.contracoes.map((contracao) => {
         return (
           <Pressable
+            key={contracao.id}
             width={"full"}
             px={4}
             py={2}
@@ -72,7 +73,6 @@ export const Contractions = () => {
               style={{}}
               justifyContent={"space-between"}
               alignItems={"center"}
-              key={contracao.id}
             >
               <Text>{contracao.hour}</Text>
               <VStack alignItems={"center"}>

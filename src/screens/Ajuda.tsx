@@ -1,5 +1,5 @@
 import React from "react";
-import { Box, Text, VStack } from "native-base";
+import { VStack } from "native-base";
 import auth from "@react-native-firebase/auth";
 import { Alert } from "react-native";
 import { Button } from "../components/Button";
