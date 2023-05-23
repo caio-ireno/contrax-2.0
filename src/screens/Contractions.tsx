@@ -1,7 +1,6 @@
 import {
   Box,
   HStack,
-  Icon,
   Modal,
   Button as NativeBaseButton,
   Pressable,
