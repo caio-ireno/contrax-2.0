@@ -4,6 +4,7 @@ import {
   Modal,
   Button as NativeBaseButton,
   Pressable,
+  ScrollView,
   Text,
   VStack,
 } from "native-base";
@@ -54,38 +55,39 @@ export const Contractions = () => {
             : "Iniciar"}
         </Text>
       </NativeBaseButton>
-
-      {gestante.contracoes.map((contracao) => {
-        return (
-          <Pressable
-            key={contracao.id}
-            width={"full"}
-            px={4}
-            py={2}
-            borderRadius={16}
-            mb={2}
-            backgroundColor={"secondary.100"}
-            _pressed={{ backgroundColor: "secondary.200" }}
-            onLongPress={() => handleLongPress(contracao.id)}
-          >
-            <HStack
-              style={{}}
-              justifyContent={"space-between"}
-              alignItems={"center"}
+      <ScrollView width={"full"}>
+        {gestante.contracoes.map((contracao) => {
+          return (
+            <Pressable
+              key={contracao.id}
+              width={"full"}
+              px={4}
+              py={2}
+              borderRadius={16}
+              mb={2}
+              backgroundColor={"secondary.100"}
+              _pressed={{ backgroundColor: "secondary.200" }}
+              onLongPress={() => handleLongPress(contracao.id)}
             >
-              <Text>{contracao.hour}</Text>
-              <VStack alignItems={"center"}>
-                <Text fontFamily={"bold"}>Duração</Text>
-                <Text>{contracao.duration}</Text>
-              </VStack>
-              <VStack alignItems={"center"}>
-                <Text fontFamily={"bold"}>Frequência</Text>
-                <Text>{contracao.frequency}</Text>
-              </VStack>
-            </HStack>
-          </Pressable>
-        );
-      })}
+              <HStack
+                style={{}}
+                justifyContent={"space-between"}
+                alignItems={"center"}
+              >
+                <Text>{contracao.hour}</Text>
+                <VStack alignItems={"center"}>
+                  <Text fontFamily={"bold"}>Duração</Text>
+                  <Text>{contracao.duration}</Text>
+                </VStack>
+                <VStack alignItems={"center"}>
+                  <Text fontFamily={"bold"}>Frequência</Text>
+                  <Text>{contracao.frequency}</Text>
+                </VStack>
+              </HStack>
+            </Pressable>
+          );
+        })}
+      </ScrollView>
 
       {showDeleteModal && (
         <Modal
