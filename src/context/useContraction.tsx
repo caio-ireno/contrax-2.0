@@ -1,6 +1,8 @@
-import { createContext, useContext, useState } from "react";
-import GestanteContext from "./GestanteContext";
+import AsyncStorage from "@react-native-async-storage/async-storage";
+import { createContext, useContext, useEffect, useState, version } from "react";
+import BackgroundTimer from "react-native-background-timer";
 import firestore from "@react-native-firebase/firestore";
+import GestanteContext from "./GestanteContext";
 
 interface ContractionHook {
   seconds: number;
@@ -36,7 +38,7 @@ export const AppContraction: React.FC<AppThemeProviderProps> = ({
 }) => {
   const { gestante } = useContext(GestanteContext);
 
-  const [customInterval, SetCustomInterval] = useState<NodeJS.Timer>();
+  const [customInterval, SetCustomInterval] = useState<number | null>(null);
   const [seconds, SetSeconds] = useState(0);
   const [minutes, setMinutes] = useState(0);
   const [id, setId] = useState(0);
@@ -44,6 +46,30 @@ export const AppContraction: React.FC<AppThemeProviderProps> = ({
   const [isActive, setIsActive] = useState(false); //altera o estado do botão para multi função
 
   const [oldHour, setOldHour] = useState("");
+
+  const storeData = async (value: string) => {
+    try {
+      await AsyncStorage.setItem("oldHour", value);
+    } catch (error) {
+      console.log("Erro ao armazenar valor no AsyncStorage:", error);
+    }
+  };
+
+  useEffect(() => {
+    const fetchData = async () => {
+      try {
+        const value = await AsyncStorage.getItem("oldHour");
+        if (value !== null) {
+          console.log(value);
+          setOldHour(value);
+        }
+      } catch (error) {
+        console.log("Erro ao obter valor do AsyncStorage:", error);
+      }
+    };
+
+    fetchData();
+  }, []);
 
   function getCurrentHour() {
     const now = new Date();
@@ -59,7 +85,7 @@ export const AppContraction: React.FC<AppThemeProviderProps> = ({
   const startTime = () => {
     setIsActive(true);
     SetCustomInterval(
-      setInterval(() => {
+      BackgroundTimer.setInterval(() => {
         changeTimer();
       }, 1000)
     );
@@ -72,7 +98,7 @@ export const AppContraction: React.FC<AppThemeProviderProps> = ({
     setMinutes(0);
     SetSeconds(0);
     if (customInterval) {
-      clearInterval(customInterval);
+      BackgroundTimer.clearInterval(customInterval);
     }
     handleCreateContraction(durationMinutes, durationSeconds);
   };
@@ -164,11 +190,12 @@ export const AppContraction: React.FC<AppThemeProviderProps> = ({
 
     const hour = getCurrentHour();
     setOldHour(hour);
+    storeData(hour);
 
     if (!oldHour) {
       frequency = "--:--";
     } else {
-      frequency = calculateTimer(hour, oldHour);
+      frequency = calculateTimer(oldHour, hour);
     }
 
     console.log(frequency);
