@@ -11,29 +11,50 @@ export const Ajuda = () => {
   const { toggleTheme } = useAppThemeContext();
   const { handleDelete } = useContractionContext();
 
-  const [minutes, setMinutes] = useState(0);
-  const [secondsLeft, setSecondsLeft] = useState(0);
-  const [timerOn, setTimerOn] = useState(false);
+  const [hour1, setHour1] = useState("");
+  const [hour2, setHour2] = useState("");
 
-  useEffect(() => {
-    if (timerOn) startTimer();
-    else BackgroundTimer.stopBackgroundTimer();
-    return () => {
-      BackgroundTimer.stopBackgroundTimer();
-    };
-  }, [timerOn]);
+  function getCurrentHour() {
+    const now = new Date();
+    const hour = now.getHours();
+    const minute = now.getMinutes();
+    const seconds = now.getSeconds();
+    const paddedHour = String(hour).padStart(2, "0");
+    const paddedMinute = String(minute).padStart(2, "0");
+    const paddedSeconds = String(seconds).padStart(2, "0");
+    return `${paddedHour}:${paddedMinute}:${paddedSeconds}`;
+  }
 
-  const startTimer = () => {
-    BackgroundTimer.runBackgroundTimer(() => {
-      setSecondsLeft((secs) => {
-        if (secs === 59) {
-          setMinutes((prevMinutes) => prevMinutes + 1);
-          return 0;
-        } else {
-          return secs + 1;
-        }
-      });
-    }, 1000);
+  const calculateTimer = () => {
+    const [hour1Hours, hour1Minutes, hour1Seconds] = hour1.split(":");
+    const [hour2Hours, hour2Minutes, hour2Seconds] = hour2.split(":");
+
+    const time1 = new Date();
+    time1.setHours(
+      Number(hour1Hours),
+      Number(hour1Minutes),
+      Number(hour1Seconds)
+    );
+
+    const time2 = new Date();
+    time2.setHours(
+      Number(hour2Hours),
+      Number(hour2Minutes),
+      Number(hour2Seconds)
+    );
+
+    const differenceInMilliseconds = Math.abs(
+      time1.getTime() - time2.getTime()
+    );
+    const hours = Math.floor(differenceInMilliseconds / (1000 * 60 * 60));
+    const minutes = Math.floor(
+      (differenceInMilliseconds % (1000 * 60 * 60)) / (1000 * 60)
+    );
+    const seconds = Math.floor((differenceInMilliseconds % (1000 * 60)) / 1000);
+
+    return `${hours}:${String(minutes).padStart(2, "0")}:${String(
+      seconds
+    ).padStart(2, "0")}`;
   };
 
   const handleLogout = () => {
@@ -69,16 +90,18 @@ export const Ajuda = () => {
       />
       <Button label="Trocar tema do App" width={"full"} onPress={toggleTheme} />
 
-      <View>
-        <Text>
-          {minutes < 10 ? "0" + minutes : minutes}:
-          {secondsLeft < 10 ? "0" + secondsLeft : secondsLeft}
-        </Text>
+      <View mt={10}>
         <Button
-          label="start/stop"
-          onPress={() => setTimerOn((timerOn) => !timerOn)}
+          mb={10}
+          label="hour1"
+          onPress={() => setHour1(getCurrentHour())}
         />
+        <Button label="hour2" onPress={() => setHour2(getCurrentHour())} />
       </View>
+
+      <Text>Hora 1: {hour1}</Text>
+      <Text>Hora 2: {hour2}</Text>
+      <Text>Diferença: {calculateTimer()}</Text>
     </VStack>
   );
 };
