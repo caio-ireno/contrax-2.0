@@ -66,7 +66,12 @@ export const Ajuda = () => {
         onPress={handleLogout}
         mb={5}
       />
-      <Button label="Trocar tema do App" width={"full"} onPress={toggleTheme} />
+      <Button
+        mb={5}
+        label="Trocar tema do App"
+        width={"full"}
+        onPress={toggleTheme}
+      />
     </VStack>
   );
 };
