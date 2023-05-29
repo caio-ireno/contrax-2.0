@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { Heading, Icon, Text, VStack, useTheme } from "native-base";
+import { Box, Heading, Icon, Text, VStack, useTheme } from "native-base";
 import { LogoCompleto } from "../icons/LogoCompleto";
 import { Input } from "../components/Input";
 import { Envelope, Key } from "phosphor-react-native";
@@ -48,6 +48,10 @@ export function SignIn() {
     navigation.navigate("criarConta");
   };
 
+  const handleForgotPassword = () => {
+    navigation.navigate("resetPassword");
+  };
+
   return (
     <VStack
       flex={1}
@@ -81,9 +85,14 @@ export function SignIn() {
         onPress={handleSignIn}
         isLoading={isLoading}
       />
-      <TouchableOpacity onPress={handleCreateAccount}>
-        <Text>Não tem conta? Cadastre-se</Text>
-      </TouchableOpacity>
+      <Box alignItems={"center"}>
+        <TouchableOpacity onPress={handleForgotPassword}>
+          <Text>Esqueci minha senha.</Text>
+        </TouchableOpacity>
+        <TouchableOpacity onPress={handleCreateAccount}>
+          <Text>Não tem conta? Cadastre-se</Text>
+        </TouchableOpacity>
+      </Box>
     </VStack>
   );
 }

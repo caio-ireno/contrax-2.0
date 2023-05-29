@@ -3,8 +3,6 @@ import auth from "@react-native-firebase/auth"
 import { Gestante } from './InterfaceGestante';
 
 
-
-
 export const criarNovaGestante = async (email: string, password: string, nome: string): Promise<Gestante> => {
   try {
     // Cria um novo usuário com email e senha
@@ -24,6 +22,7 @@ export const criarNovaGestante = async (email: string, password: string, nome: s
     });
 
     return {
+      gestanteId: '',
       id: gestanteRef.id,
       name: nome,
       contracoes: [],
