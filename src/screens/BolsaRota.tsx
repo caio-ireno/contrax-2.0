@@ -1,34 +1,45 @@
 import React, { useContext, useEffect, useState } from "react";
-import { Box, ScrollView, Select, Text, VStack } from "native-base";
+import { Box, HStack, ScrollView, Select, Text, VStack } from "native-base";
 import { Check } from "phosphor-react-native";
 import firestore from "@react-native-firebase/firestore";
 
 import GestanteContext from "../context/GestanteContext";
 import { Gestante } from "../firebase services/InterfaceGestante";
-import { Input } from "../components/Input";
 
 export const BolsaRota = () => {
   const [horario, setHorario] = useState("");
   const [coloracao, setColoracao] = useState("");
-
   const { gestante } = useContext(GestanteContext);
 
-  const handleTextChange = (newText) => {
-    // Formata a entrada do usuário
-    const formattedText = newText
-      .replace(/[^0-9]/g, "")
-      .substring(0, 4)
-      .replace(/^(.{2})/, "$1:");
+  const [hour, setHour] = useState("");
+  const [minute, setMinute] = useState("");
+  const hourArray = [];
+  const minuteArray = [];
 
-    // Atualiza o estado do componente com a nova string formatada
-    setHorario(formattedText);
-  };
+  // Preenchendo o array de horas
+  for (let hour = 0; hour < 24; hour++) {
+    // Formata o número da hora com dois dígitos
+    const formattedHour = hour.toString().padStart(2, "0");
+    hourArray.push(formattedHour);
+  }
+
+  // Preenchendo o array de minutos
+  for (let minute = 0; minute < 60; minute++) {
+    // Formata o número do minuto com dois dígitos
+    const formattedMinute = minute.toString().padStart(2, "0");
+    minuteArray.push(formattedMinute);
+  }
 
   useEffect(() => {
-    if (coloracao === "" && horario === "") {
+    if (coloracao === "" && hour === "" && minute === "") {
       setColoracao(gestante.bolsa.coloracao);
-      setHorario(gestante.bolsa.horario);
+      let horas = gestante.bolsa.horario.split(":");
+      setHour(horas[0]);
+      setMinute(horas[1]);
+
+      console.log(horas);
     } else {
+      setHorario(hour + ":" + minute);
       const changeColorBolsaRota = async () => {
         try {
           const NewBolsa: Partial<Gestante> = { bolsa: { coloracao, horario } };
@@ -43,7 +54,14 @@ export const BolsaRota = () => {
 
       changeColorBolsaRota();
     }
-  }, [coloracao, horario, gestante.bolsa.coloracao, gestante.bolsa.horario]);
+  }, [
+    coloracao,
+    horario,
+    hour,
+    minute,
+    gestante.bolsa.coloracao,
+    gestante.bolsa.horario,
+  ]);
 
   return (
     <ScrollView backgroundColor={"primary.300"}>
@@ -59,26 +77,51 @@ export const BolsaRota = () => {
           <Text color="primary" fontFamily={"body"} fontSize={12}>
             Horario de rompimento
           </Text>
-          <Input
-            backgroundColor={"secondary.100"}
-            placeholderTextColor={"primary.700"}
-            size={"md"}
-            borderWidth={0}
-            borderRadius={15}
-            fontFamily={"body"}
-            color={"primary.700"}
-            _focus={{
-              borderWidth: 1,
-              borderColor: "secondary.700",
-              backgroundColor: "secondary.300",
-            }}
-            textAlign={"center"}
-            maxLength={5}
-            mt={1}
-            width={"full"}
-            value={horario}
-            onChangeText={handleTextChange}
-          />
+
+          <HStack width={"full"} justifyContent={"center"}>
+            <Select
+              borderRadius={15}
+              placeholderTextColor={"black"}
+              placeholder={hour !== "" ? hour : "Horas"}
+              bgColor={"white"}
+              width={"full"}
+              flex={1}
+              _selectedItem={{
+                bg: "secondary.700",
+                endIcon: <Check size="5" />,
+              }}
+              mt={1}
+              onValueChange={(itemValue) => {
+                setHour(itemValue);
+              }}
+            >
+              {hourArray.map((hour) => {
+                return <Select.Item key={hour} label={hour} value={hour} />;
+              })}
+            </Select>
+            <Select
+              borderRadius={15}
+              placeholderTextColor={"black"}
+              bgColor={"white"}
+              placeholder={minute !== "" ? minute : "Minutos"}
+              width={"full"}
+              flex={1}
+              _selectedItem={{
+                bg: "secondary.700",
+                endIcon: <Check size="5" />,
+              }}
+              mt={1}
+              onValueChange={(itemValue) => {
+                setMinute(itemValue);
+              }}
+            >
+              {minuteArray.map((minute) => {
+                return (
+                  <Select.Item key={minute} label={minute} value={minute} />
+                );
+              })}
+            </Select>
+          </HStack>
         </VStack>
 
         <VStack width={"full"} mt={6}>
