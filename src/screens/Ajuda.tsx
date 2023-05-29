@@ -1,5 +1,5 @@
-import React from "react";
-import { VStack } from "native-base";
+import React, { useState } from "react";
+import { Box, Modal, VStack } from "native-base";
 import auth from "@react-native-firebase/auth";
 import { Alert } from "react-native";
 import { Button } from "../components/Button";
@@ -9,6 +9,7 @@ import { useContractionContext } from "../context/useContraction";
 export const Ajuda = () => {
   const { toggleTheme } = useAppThemeContext();
   const { handleDelete } = useContractionContext();
+  const [showModal, setShowModal] = useState(false);
 
   const handleLogout = () => {
     auth()
@@ -32,9 +33,33 @@ export const Ajuda = () => {
       <Button
         label="Deletar informações"
         width={"full"}
-        onPress={handleDelete}
+        onPress={() => setShowModal(true)}
         mb={5}
       />
+
+      <Modal isOpen={showModal} onClose={() => setShowModal(false)}>
+        <Box alignItems={"center"} width={"80%"}>
+          <Button
+            mb={2}
+            backgroundColor={"primary.400"}
+            width={"full"}
+            label="Cancelar"
+            onPress={() => {
+              setShowModal(false);
+            }}
+          />
+
+          <Button
+            backgroundColor={"primary.400"}
+            width={"full"}
+            label="Deletar"
+            onPress={() => {
+              handleDelete();
+              setShowModal(false);
+            }}
+          />
+        </Box>
+      </Modal>
       <Button
         label="Sair da Conta"
         width={"full"}
