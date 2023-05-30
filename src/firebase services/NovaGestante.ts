@@ -16,7 +16,7 @@ export const criarNovaGestante = async (email: string, password: string, nome: s
       contracoes: [],
       bolsa: {
         coloracao: '',
-        horario: ''
+        horario: ':'
       },
       userId: userCredential.user?.uid
     });

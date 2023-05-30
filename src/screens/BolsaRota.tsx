@@ -33,11 +33,14 @@ export const BolsaRota = () => {
   useEffect(() => {
     if (coloracao === "" && hour === "" && minute === "") {
       setColoracao(gestante.bolsa.coloracao);
-      let horas = gestante.bolsa.horario.split(":");
-      setHour(horas[0]);
-      setMinute(horas[1]);
-
-      console.log(horas);
+      if (gestante.bolsa.horario === "") {
+        setHour("");
+        setMinute("");
+      } else {
+        let horas = gestante.bolsa.horario.split(":");
+        setHour(horas[0]);
+        setMinute(horas[1]);
+      }
     } else {
       setHorario(hour + ":" + minute);
       const changeColorBolsaRota = async () => {
@@ -124,7 +127,7 @@ export const BolsaRota = () => {
           </HStack>
         </VStack>
 
-        <VStack width={"full"} mt={6}>
+        <VStack width={"full"} mt={4}>
           <Text fontFamily={"body"} fontSize={12}>
             Coloração da bolsa
           </Text>

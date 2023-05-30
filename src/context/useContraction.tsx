@@ -262,7 +262,6 @@ export const AppContraction: React.FC<AppThemeProviderProps> = ({
     }
   };
 
-  console.log(oldHour);
   return (
     <ContractionContext.Provider
       value={{
