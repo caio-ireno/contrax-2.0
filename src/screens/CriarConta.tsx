@@ -1,14 +1,12 @@
 import React, { useState } from "react";
-import { Heading, Icon, Text, VStack, useTheme } from "native-base";
-import { LogoCompleto } from "../icons/LogoCompleto";
+import { Icon, Text, VStack, useTheme } from "native-base";
 import { Envelope, Key, IdentificationBadge } from "phosphor-react-native";
 import { useNavigation } from "@react-navigation/native";
 import { Button } from "../components/Button";
-import { Alert, TouchableOpacity } from "react-native";
+import { TouchableOpacity } from "react-native";
 import { Input } from "../components/Input";
-import auth from "@react-native-firebase/auth";
-import { Logo } from "../icons/Logo";
 import { criarNovaGestante } from "../firebase services/NovaGestante";
+import { OndasDeParto } from "../icons/OndasParto";
 
 export const CriarConta = () => {
   const [nome, setNome] = useState("");
@@ -43,7 +41,12 @@ export const CriarConta = () => {
       pt={24}
       backgroundColor={"primary.300"}
     >
-      <Logo width="100" height="100" color="#121629" />
+      <OndasDeParto
+        width="300"
+        height="260"
+        color="#121629"
+        BgColor="transparent"
+      />
 
       <Input
         mt={10}

@@ -1,12 +1,12 @@
 import React, { useState } from "react";
-import { Box, Heading, Icon, Text, VStack, useTheme } from "native-base";
-import { LogoCompleto } from "../icons/LogoCompleto";
+import { Box, Icon, Text, VStack, useTheme } from "native-base";
 import { Input } from "../components/Input";
 import { Envelope, Key } from "phosphor-react-native";
 import { Button } from "../components/Button";
 import { Alert, TouchableOpacity } from "react-native";
 import auth from "@react-native-firebase/auth";
 import { useNavigation } from "@react-navigation/native";
+import { OndasDeParto } from "../icons/OndasParto";
 
 export function SignIn() {
   const [email, setEmail] = useState("");
@@ -60,8 +60,15 @@ export function SignIn() {
       pt={24}
       backgroundColor={"primary.300"}
     >
-      <LogoCompleto width="300" height="260" color="#121629" />
-      <Heading mb={5}>Acesse sua conta</Heading>
+      <OndasDeParto
+        width="300"
+        height="260"
+        color="#121629"
+        BgColor="transparent"
+      />
+      <Text fontSize={26} mb={5} mt={5}>
+        Acesse sua conta
+      </Text>
       <Input
         placeholder="E-mail"
         mb={4}

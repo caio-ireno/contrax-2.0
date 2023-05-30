@@ -15,8 +15,8 @@ import { Button } from "../components/Button";
 import { useAppThemeContext } from "../context/ThemeContext";
 import { useContractionContext } from "../context/useContraction";
 import GestanteContext from "../context/GestanteContext";
-import { Logo } from "../icons/Logo";
 import { Trash, SignOut, Palette } from "phosphor-react-native";
+import { OndasDeParto } from "../icons/OndasParto";
 
 export const Ajuda = () => {
   const theme = useTheme();
@@ -37,12 +37,15 @@ export const Ajuda = () => {
   };
 
   return (
-    <VStack flex={1} pt={10} backgroundColor={"primary.300"}>
+    <VStack flex={1} backgroundColor={"primary.300"}>
       <Box py={5} flexDirection={"column"} alignItems={"center"} width={"full"}>
-        <Avatar size={100} source={img} backgroundColor={"transparent"} />
-        <Text mt={3} fontSize={20}>
-          Bem vinda, {gestante.name}
-        </Text>
+        <OndasDeParto
+          width="200"
+          height="180"
+          color="#121629"
+          BgColor="transparent"
+        />
+        <Text fontSize={20}>Bem vinda, {gestante.name}</Text>
       </Box>
 
       <Box

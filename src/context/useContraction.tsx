@@ -3,6 +3,7 @@ import { createContext, useContext, useEffect, useState, version } from "react";
 import BackgroundTimer from "react-native-background-timer";
 import firestore from "@react-native-firebase/firestore";
 import GestanteContext from "./GestanteContext";
+import { Alert } from "react-native";
 
 interface ContractionHook {
   seconds: number;
@@ -256,7 +257,7 @@ export const AppContraction: React.FC<AppThemeProviderProps> = ({
         clearInterval(customInterval);
       }
       console.log("delete do useContraction");
-      alert("Registros Apagados com sucesso");
+      Alert.alert("Registros Apagados com sucesso");
     } catch (error) {
       alert(error.message || "Erro ao apagar registros");
     }

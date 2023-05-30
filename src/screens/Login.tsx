@@ -1,7 +1,7 @@
-import { Heading, Text, VStack } from "native-base";
-import { LogoCompleto } from "../icons/LogoCompleto";
+import { VStack } from "native-base";
 import { Button } from "../components/Button";
 import { useNavigation } from "@react-navigation/native";
+import { OndasDeParto } from "../icons/OndasParto";
 
 export const Login = () => {
   const navigation = useNavigation();
@@ -22,10 +22,14 @@ export const Login = () => {
       pt={24}
       backgroundColor={"primary.300"}
     >
-      <LogoCompleto width="300" height="260" color="#121629" />
-      <Heading mb={5}>Acesse sua conta</Heading>
+      <OndasDeParto
+        width="300"
+        height="260"
+        color="#121629"
+        BgColor="transparent"
+      />
 
-      <Button label="Paciente" mb={4} onPress={handlePregnant} />
+      <Button mt={5} label="Paciente" mb={4} onPress={handlePregnant} />
       <Button label="Profissional" onPress={handleProfessional} />
     </VStack>
   );

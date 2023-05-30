@@ -7,6 +7,7 @@ import { useState } from "react";
 import { getGestante } from "../../firebase services/GetGestante";
 import { Gestante } from "../../firebase services/InterfaceGestante";
 import { Alert } from "react-native";
+import { OndasDeParto } from "../../icons/OndasParto";
 
 export const Profissional = () => {
   const [gestanteId, setGestanteId] = useState("");
@@ -32,7 +33,12 @@ export const Profissional = () => {
       pt={24}
       backgroundColor={"primary.300"}
     >
-      <LogoCompleto width="300" height="260" color="#121629" />
+      <OndasDeParto
+        width="300"
+        height="260"
+        color="#121629"
+        BgColor="transparent"
+      />
       <Heading mb={5}>Acesse sua conta</Heading>
       <Input onChangeText={setGestanteId} mb={5} />
       <Button label="Entrar" onPress={handlePregnentInfo} />
