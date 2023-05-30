@@ -195,10 +195,17 @@ export const AppContraction: React.FC<AppThemeProviderProps> = ({
     if (!oldHour) {
       frequency = "--:--";
     } else {
-      frequency = calculateTimer(oldHour, hour);
+      let ArrayNumber = [];
+      let ArrayFrequency = calculateTimer(oldHour, hour).split(":");
+      ArrayFrequency.forEach((value) => {
+        ArrayNumber.push(Number(value));
+      });
+      if (ArrayNumber[0] >= 1) {
+        frequency = "longa";
+      } else {
+        frequency = calculateTimer(oldHour, hour);
+      }
     }
-
-    console.log(frequency);
 
     const createNewContraction = createContraction(
       duration,
@@ -243,6 +250,8 @@ export const AppContraction: React.FC<AppThemeProviderProps> = ({
       setMinutes(0);
       SetSeconds(0);
       setIsActive(false);
+      storeData("");
+
       if (customInterval) {
         clearInterval(customInterval);
       }
@@ -253,6 +262,7 @@ export const AppContraction: React.FC<AppThemeProviderProps> = ({
     }
   };
 
+  console.log(oldHour);
   return (
     <ContractionContext.Provider
       value={{

@@ -123,7 +123,6 @@ export const Contractions = () => {
           </Box>
         </Modal>
       )}
-      {/* <TableList data={gestante.contracoes} /> */}
     </VStack>
   );
 };
