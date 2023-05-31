@@ -2,28 +2,23 @@ import { extendTheme } from "native-base";
 
 export const DARKTHEME = extendTheme({
   colors: {
-    secondary: {
-      100: '#E6E8F6',
-      200: '#C0C4E2',
-      300: '#D4D8F0',
-      400: '#A9B2E4',
-      500: '#6873B1',
-      600: '#1C2238',
-      700: '#A9B2E4',
-      800: '#0D1021',
-      900: '#080B16',
-    },
     primary: {
-      100: '#fffffc',
-      200: '#F8F0E3',
-      300: '#EEBBC3',
-      400: '#F9D9C2',
-      500: '#d4939d',
-      600: '#EFA5A5',
-      700: '#EEBBC3',
-      800: '#D98E8A',
-      900: '#d4939d',
+      100: '#fffffc', //co
+      200: '#94a1b2', //cor da barra de configuração
+      300: '#72757e', //cor do background
+      400: '#76D7C4',
+      500: '#94a1b2', //cor do botão
+      700: '#121629', //cor login page
+
     },
+    secondary: {
+      100: '#fffffc', //cor de fundo do texto e alguns textos
+      300: '#A3E4D7', // on hover login
+      700: '#2cb67d', //cor dos botões
+      800: '#000', //logo pagina ajuda
+      900: '#76D7C4', // on hover button
+    },
+
 
   },
   fonts: {

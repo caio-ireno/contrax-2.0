@@ -7,7 +7,7 @@ interface LogoIconProps {
   color: string;
 }
 
-export const Logo: React.FC<LogoIconProps> = ({ width, height, color }) => {
+export const Ondas: React.FC<LogoIconProps> = ({ width, height, color }) => {
   return (
     <Svg width={width} height={height} viewBox="0 0 250 115.461">
       <G class="css-169xcrc" fill={color}>

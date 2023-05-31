@@ -7,6 +7,7 @@ import { TouchableOpacity } from "react-native";
 import { Input } from "../components/Input";
 import { criarNovaGestante } from "../firebase services/NovaGestante";
 import { OndasDeParto } from "../icons/OndasParto";
+import { Ondas } from "../icons/Ondas";
 
 export const CriarConta = () => {
   const [nome, setNome] = useState("");
@@ -41,12 +42,7 @@ export const CriarConta = () => {
       pt={24}
       backgroundColor={"primary.300"}
     >
-      <OndasDeParto
-        width="300"
-        height="260"
-        color="#121629"
-        BgColor="transparent"
-      />
+      <Ondas width="200" height="100" color="#121629" />
 
       <Input
         mt={10}

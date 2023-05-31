@@ -61,8 +61,9 @@ export const Ajuda = () => {
       </Box>
       <VStack flex={1} px={8} pb={4}>
         <Button
+          borderRadius={10}
           justifyContent={"space-between"}
-          leftIcon={<Icon as={<Trash color={theme.colors.primary[700]} />} />}
+          leftIcon={<Icon as={<Trash color={theme.colors.secondary[800]} />} />}
           label="Deletar informações"
           width={"full"}
           onPress={() => setShowModal(true)}
@@ -93,16 +94,22 @@ export const Ajuda = () => {
           </Box>
         </Modal>
         <Button
+          borderRadius={10}
           justifyContent={"space-between"}
-          leftIcon={<Icon as={<SignOut color={theme.colors.primary[700]} />} />}
+          leftIcon={
+            <Icon as={<SignOut color={theme.colors.secondary[800]} />} />
+          }
           label="Sair da Conta"
           width={"full"}
           onPress={handleLogout}
           mb={5}
         />
         <Button
+          borderRadius={10}
           justifyContent={"space-between"}
-          leftIcon={<Icon as={<Palette color={theme.colors.primary[700]} />} />}
+          leftIcon={
+            <Icon as={<Palette color={theme.colors.secondary[800]} />} />
+          }
           mb={5}
           label="Trocar tema do App"
           width={"full"}

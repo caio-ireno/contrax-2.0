@@ -7,6 +7,8 @@ import { Alert, TouchableOpacity } from "react-native";
 import auth from "@react-native-firebase/auth";
 import { useNavigation } from "@react-navigation/native";
 import { OndasDeParto } from "../icons/OndasParto";
+import { OndasDeParto2 } from "../icons/OndasParto2";
+import { OndasDeParto3 } from "../icons/OndasParto3";
 
 export function SignIn() {
   const [email, setEmail] = useState("");
@@ -62,7 +64,7 @@ export function SignIn() {
     >
       <OndasDeParto
         width="300"
-        height="260"
+        height="220"
         color="#121629"
         BgColor="transparent"
       />
@@ -94,10 +96,10 @@ export function SignIn() {
       />
       <Box alignItems={"center"}>
         <TouchableOpacity onPress={handleForgotPassword}>
-          <Text>Esqueci minha senha.</Text>
+          <Text color="primary.700">Esqueci minha senha.</Text>
         </TouchableOpacity>
         <TouchableOpacity onPress={handleCreateAccount}>
-          <Text>Não tem conta? Cadastre-se</Text>
+          <Text color="primary.700">Não tem conta? Cadastre-se</Text>
         </TouchableOpacity>
       </Box>
     </VStack>
