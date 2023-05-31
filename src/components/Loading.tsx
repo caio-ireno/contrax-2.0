@@ -1,9 +1,9 @@
-import { Center, Spinner } from "native-base";
+import { Center, Spinner } from 'native-base'
 
 export const Loading = () => {
   return (
     <Center flex={1}>
-      <Spinner color={"secondary.700"}></Spinner>
+      <Spinner color={'secondary.700'}></Spinner>
     </Center>
-  );
-};
+  )
+}

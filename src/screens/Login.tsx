@@ -1,26 +1,27 @@
-import { VStack } from "native-base";
-import { Button } from "../components/Button";
-import { useNavigation } from "@react-navigation/native";
-import { OndasDeParto } from "../icons/OndasParto";
+import { useNavigation } from '@react-navigation/native'
+import { VStack } from 'native-base'
+
+import { Button } from '../components/Button'
+import { OndasDeParto } from '../icons/OndasParto'
 
 export const Login = () => {
-  const navigation = useNavigation();
+  const navigation = useNavigation()
 
   const handlePregnant = () => {
-    navigation.navigate("login");
-  };
+    navigation.navigate('login')
+  }
 
   const handleProfessional = () => {
-    navigation.navigate("profissional");
-  };
+    navigation.navigate('profissional')
+  }
 
   return (
     <VStack
       flex={1}
-      alignItems={"center"}
+      alignItems={'center'}
       px={8}
       pt={24}
-      backgroundColor={"primary.300"}
+      backgroundColor={'primary.300'}
     >
       <OndasDeParto
         width="300"
@@ -32,5 +33,5 @@ export const Login = () => {
       <Button mt={5} label="Paciente" mb={4} onPress={handlePregnant} />
       <Button label="Profissional" onPress={handleProfessional} />
     </VStack>
-  );
-};
+  )
+}

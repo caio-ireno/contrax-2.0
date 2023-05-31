@@ -1,14 +1,15 @@
-import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
-import { Contractions } from "../screens/Contractions";
-import { Ajuda } from "../screens/Ajuda";
-import { BolsaRota } from "../screens/BolsaRota";
-import { ClockCounterClockwise, Question, Baby } from "phosphor-react-native";
-import { useTheme } from "native-base";
-import { AppContraction } from "../context/useContraction";
+import { createBottomTabNavigator } from '@react-navigation/bottom-tabs'
+import { useTheme } from 'native-base'
+import { Baby, ClockCounterClockwise, Question } from 'phosphor-react-native'
 
-const { Navigator, Screen } = createBottomTabNavigator();
+import { AppContraction } from '../context/useContraction'
+import { Ajuda } from '../screens/Ajuda'
+import { BolsaRota } from '../screens/BolsaRota'
+import { Contractions } from '../screens/Contractions'
+
+const { Navigator, Screen } = createBottomTabNavigator()
 export const AppRoutes = () => {
-  const { colors } = useTheme();
+  const { colors } = useTheme()
   return (
     <AppContraction>
       <Navigator
@@ -36,5 +37,5 @@ export const AppRoutes = () => {
         />
       </Navigator>
     </AppContraction>
-  );
-};
+  )
+}

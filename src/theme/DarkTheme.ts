@@ -1,4 +1,4 @@
-import { extendTheme } from "native-base";
+import { extendTheme } from 'native-base'
 
 export const DARKTHEME = extendTheme({
   colors: {
@@ -9,7 +9,6 @@ export const DARKTHEME = extendTheme({
       400: '#76D7C4',
       500: '#94a1b2', //cor do botão
       700: '#121629', //cor login page
-
     },
     secondary: {
       100: '#fffffc', //cor de fundo do texto e alguns textos
@@ -20,7 +19,6 @@ export const DARKTHEME = extendTheme({
     },
   },
   fonts: {
-    body: 'Roboto'
-  }
-
+    body: 'Roboto',
+  },
 })

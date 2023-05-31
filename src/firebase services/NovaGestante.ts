@@ -1,25 +1,31 @@
+import auth from '@react-native-firebase/auth'
 import firestore from '@react-native-firebase/firestore'
-import auth from "@react-native-firebase/auth"
-import { Gestante } from './InterfaceGestante';
 
+import { Gestante } from './InterfaceGestante'
 
-export const criarNovaGestante = async (email: string, password: string, nome: string): Promise<Gestante> => {
+export const criarNovaGestante = async (
+  email: string,
+  password: string,
+  nome: string,
+): Promise<Gestante> => {
   try {
     // Cria um novo usuário com email e senha
-    const userCredential = await auth()
-      .createUserWithEmailAndPassword(email, password)
+    const userCredential = await auth().createUserWithEmailAndPassword(
+      email,
+      password,
+    )
 
     // Adiciona um novo documento para essa gestante no Firestore
-    const gestanteRef = firestore().collection('gestantes').doc();
+    const gestanteRef = firestore().collection('gestantes').doc()
     await gestanteRef.set({
       name: nome,
       contracoes: [],
       bolsa: {
         coloracao: '',
-        horario: ':'
+        horario: ':',
       },
-      userId: userCredential.user?.uid
-    });
+      userId: userCredential.user?.uid,
+    })
 
     return {
       gestanteId: '',
@@ -28,13 +34,12 @@ export const criarNovaGestante = async (email: string, password: string, nome: s
       contracoes: [],
       bolsa: {
         coloracao: '',
-        horario: ''
-      }
-    };
-
+        horario: '',
+      },
+    }
   } catch (error) {
-    console.error(error);
+    console.error(error)
     console.log(email)
-    throw new Error('Erro ao criar nova gestante');
+    throw new Error('Erro ao criar nova gestante')
   }
-};
+}

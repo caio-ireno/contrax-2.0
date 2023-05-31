@@ -1,4 +1,4 @@
-import { ParamListBase } from '@react-navigation/native';
+import { ParamListBase } from '@react-navigation/native'
 
 export declare global {
   namespace ReactNavigation {
@@ -14,7 +14,4 @@ export declare global {
   }
 }
 
-export type RootParamList = ReactNavigation.RootParamList;
-
-
-
+export type RootParamList = ReactNavigation.RootParamList

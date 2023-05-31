@@ -1,4 +1,4 @@
-import { extendTheme } from "native-base";
+import { extendTheme } from 'native-base'
 
 export const BASETHEME = extendTheme({
   colors: {
@@ -8,7 +8,6 @@ export const BASETHEME = extendTheme({
       400: '#7FB3D5',
       500: '#6873B1', //cor do botão
       700: '#121629', //cor login page
-
     },
     secondary: {
       100: '#fffffc', //cor de fundo do texto e alguns textos e background do login
@@ -21,10 +20,9 @@ export const BASETHEME = extendTheme({
       primary: 'black',
       secondary: 'white',
     },
-
   },
   fonts: {
     body: 'Signika_400Regular',
-    bold: 'Signika_600SemiBold'
-  }
+    bold: 'Signika_600SemiBold',
+  },
 })

@@ -1,10 +1,10 @@
-import React from "react";
-import Svg, { Path, Mask, G } from "react-native-svg";
+import React from 'react'
+import Svg, { G, Path } from 'react-native-svg'
 
 interface LogoIconProps {
-  width: string;
-  height: string;
-  color: string;
+  width: string
+  height: string
+  color: string
 }
 
 export const Ondas: React.FC<LogoIconProps> = ({ width, height, color }) => {
@@ -17,5 +17,5 @@ export const Ondas: React.FC<LogoIconProps> = ({ width, height, color }) => {
         />
       </G>
     </Svg>
-  );
-};
+  )
+}

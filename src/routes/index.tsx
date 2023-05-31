@@ -1,29 +1,28 @@
-import { NavigationContainer } from "@react-navigation/native";
-import { AppRoutes } from "./gestante.routes";
-import auth, { FirebaseAuthTypes } from "@react-native-firebase/auth";
-import { useState, useEffect } from "react";
-import { LoginRoutes } from "./login.routes";
-import { getGestante } from "../firebase services/GetGestante";
-import { Gestante } from "../firebase services/InterfaceGestante";
-import GestanteContext from "../context/GestanteContext";
+import auth, { FirebaseAuthTypes } from '@react-native-firebase/auth'
+import { NavigationContainer } from '@react-navigation/native'
+import { useEffect, useState } from 'react'
+
+import GestanteContext from '../context/GestanteContext'
+import { getGestante } from '../firebase services/GetGestante'
+import { Gestante } from '../firebase services/InterfaceGestante'
+import { AppRoutes } from './gestante.routes'
+import { LoginRoutes } from './login.routes'
 
 export const Routes = () => {
-  const [loading, setLoading] = useState(true);
-  const [userAuth, setUserAuth] = useState<FirebaseAuthTypes.User>();
-  const [gestante, setGestante] = useState<Gestante | null>(null);
+  const [userAuth, setUserAuth] = useState<FirebaseAuthTypes.User>()
+  const [gestante, setGestante] = useState<Gestante | null>(null)
 
   useEffect(() => {
-    const subscriber = auth().onAuthStateChanged(async (user) => {
+    const subscriber = auth().onAuthStateChanged(async user => {
       if (user) {
-        const gestanteData = await getGestante(user.uid);
-        setGestante(gestanteData);
+        const gestanteData = await getGestante(user.uid)
+        setGestante(gestanteData)
       }
-      setUserAuth(user);
-      setLoading(false);
-    });
+      setUserAuth(user)
+    })
 
-    return subscriber;
-  }, [gestante]);
+    return subscriber
+  }, [gestante])
 
   return (
     <NavigationContainer>
@@ -35,5 +34,5 @@ export const Routes = () => {
         <LoginRoutes />
       )}
     </NavigationContainer>
-  );
-};
+  )
+}

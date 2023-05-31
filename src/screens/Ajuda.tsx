@@ -1,44 +1,35 @@
-import React, { useContext, useState } from "react";
-import {
-  Avatar,
-  Box,
-  Circle,
-  Icon,
-  Modal,
-  Text,
-  VStack,
-  useTheme,
-} from "native-base";
-import auth from "@react-native-firebase/auth";
-import { Alert } from "react-native";
-import { Button } from "../components/Button";
-import { useAppThemeContext } from "../context/ThemeContext";
-import { useContractionContext } from "../context/useContraction";
-import GestanteContext from "../context/GestanteContext";
-import { Trash, SignOut, Palette } from "phosphor-react-native";
-import { OndasDeParto } from "../icons/OndasParto";
+import auth from '@react-native-firebase/auth'
+import { Box, Icon, Modal, Text, useTheme, VStack } from 'native-base'
+import { Palette, SignOut, Trash } from 'phosphor-react-native'
+import React, { useContext, useState } from 'react'
+import { Alert } from 'react-native'
+
+import { Button } from '../components/Button'
+import GestanteContext from '../context/GestanteContext'
+import { useAppThemeContext } from '../context/ThemeContext'
+import { useContractionContext } from '../context/useContraction'
+import { OndasDeParto } from '../icons/OndasParto'
 
 export const Ajuda = () => {
-  const theme = useTheme();
-  const { gestante } = useContext(GestanteContext);
-  const { toggleTheme } = useAppThemeContext();
-  const { handleDelete } = useContractionContext();
-  const [showModal, setShowModal] = useState(false);
-  const img = require("../assets/pregnant1.png");
+  const theme = useTheme()
+  const { gestante } = useContext(GestanteContext)
+  const { toggleTheme } = useAppThemeContext()
+  const { handleDelete } = useContractionContext()
+  const [showModal, setShowModal] = useState(false)
 
   const handleLogout = () => {
     auth()
       .signOut()
-      .catch((error) => {
-        console.log(error);
-        return Alert.alert("logout", "Não foi possivel sair");
+      .catch(error => {
+        console.log(error)
+        return Alert.alert('logout', 'Não foi possivel sair')
       })
-      .then(() => console.log("saiu"));
-  };
+      .then(() => console.log('saiu'))
+  }
 
   return (
-    <VStack flex={1} backgroundColor={"primary.300"}>
-      <Box py={5} flexDirection={"column"} alignItems={"center"} width={"full"}>
+    <VStack flex={1} backgroundColor={'primary.300'}>
+      <Box py={5} flexDirection={'column'} alignItems={'center'} width={'full'}>
         <OndasDeParto
           width="200"
           height="180"
@@ -52,70 +43,70 @@ export const Ajuda = () => {
         pl={5}
         mb={5}
         mt={5}
-        width={"full"}
+        width={'full'}
         height={10}
-        justifyContent={"center"}
-        backgroundColor={"primary.200"}
+        justifyContent={'center'}
+        backgroundColor={'primary.200'}
       >
         Configurações
       </Box>
       <VStack flex={1} px={8} pb={4}>
         <Button
           borderRadius={10}
-          justifyContent={"space-between"}
+          justifyContent={'space-between'}
           leftIcon={<Icon as={<Trash color={theme.colors.secondary[800]} />} />}
           label="Deletar informações"
-          width={"full"}
+          width={'full'}
           onPress={() => setShowModal(true)}
           mb={5}
         />
 
         <Modal isOpen={showModal} onClose={() => setShowModal(false)}>
-          <Box alignItems={"center"} width={"80%"}>
+          <Box alignItems={'center'} width={'80%'}>
             <Button
               mb={2}
-              backgroundColor={"primary.400"}
-              width={"full"}
+              backgroundColor={'primary.400'}
+              width={'full'}
               label="Cancelar"
               onPress={() => {
-                setShowModal(false);
+                setShowModal(false)
               }}
             />
 
             <Button
-              backgroundColor={"primary.400"}
-              width={"full"}
+              backgroundColor={'primary.400'}
+              width={'full'}
               label="Deletar"
               onPress={() => {
-                handleDelete();
-                setShowModal(false);
+                handleDelete()
+                setShowModal(false)
               }}
             />
           </Box>
         </Modal>
         <Button
           borderRadius={10}
-          justifyContent={"space-between"}
+          justifyContent={'space-between'}
           leftIcon={
             <Icon as={<SignOut color={theme.colors.secondary[800]} />} />
           }
           label="Sair da Conta"
-          width={"full"}
+          width={'full'}
           onPress={handleLogout}
           mb={5}
         />
         <Button
           borderRadius={10}
-          justifyContent={"space-between"}
+          justifyContent={'space-between'}
           leftIcon={
             <Icon as={<Palette color={theme.colors.secondary[800]} />} />
           }
           mb={5}
           label="Trocar tema do App"
-          width={"full"}
+          width={'full'}
           onPress={toggleTheme}
         />
       </VStack>
     </VStack>
-  );
-};
+  )
+}

@@ -1,66 +1,65 @@
-import React, { useState } from "react";
-import { Box, Icon, Text, VStack, useTheme } from "native-base";
-import { Input } from "../components/Input";
-import { Envelope, Key } from "phosphor-react-native";
-import { Button } from "../components/Button";
-import { Alert, TouchableOpacity } from "react-native";
-import auth from "@react-native-firebase/auth";
-import { useNavigation } from "@react-navigation/native";
-import { OndasDeParto } from "../icons/OndasParto";
-import { OndasDeParto2 } from "../icons/OndasParto2";
-import { OndasDeParto3 } from "../icons/OndasParto3";
+import auth from '@react-native-firebase/auth'
+import { useNavigation } from '@react-navigation/native'
+import { Box, Icon, Text, useTheme, VStack } from 'native-base'
+import { Envelope, Key } from 'phosphor-react-native'
+import React, { useState } from 'react'
+import { Alert, TouchableOpacity } from 'react-native'
+
+import { Button } from '../components/Button'
+import { Input } from '../components/Input'
+import { OndasDeParto } from '../icons/OndasParto'
 
 export function SignIn() {
-  const [email, setEmail] = useState("");
-  const [password, setPassword] = useState("");
+  const [email, setEmail] = useState('')
+  const [password, setPassword] = useState('')
 
-  const [isLoading, setIsLoading] = useState(false);
-  const theme = useTheme();
+  const [isLoading, setIsLoading] = useState(false)
+  const theme = useTheme()
 
-  const navigation = useNavigation();
+  const navigation = useNavigation()
 
   const handleSignIn = () => {
     if (!email || !password) {
-      return Alert.alert("Entrar", "Digite um email e uma senha");
+      return Alert.alert('Entrar', 'Digite um email e uma senha')
     }
-    setIsLoading(false);
+    setIsLoading(true)
 
     auth()
       .signInWithEmailAndPassword(email, password)
-      .catch((error) => {
-        console.log(error);
-        setIsLoading(false);
+      .catch(error => {
+        console.log(error)
+        setIsLoading(false)
 
-        if (error.code === "auth/user-not-found") {
-          return Alert.alert("Entrar", "Usuário nao cadastrado.");
+        if (error.code === 'auth/user-not-found') {
+          return Alert.alert('Entrar', 'Usuário nao cadastrado.')
         }
 
-        if (error.code === "auth/invalid-email") {
-          return Alert.alert("Entrar", "E-mail ou Senha inválido.");
+        if (error.code === 'auth/invalid-email') {
+          return Alert.alert('Entrar', 'E-mail ou Senha inválido.')
         }
-        if (error.code === "auth/wrong-password") {
-          return Alert.alert("Entrar", "E-mail ou Senha inválido.");
+        if (error.code === 'auth/wrong-password') {
+          return Alert.alert('Entrar', 'E-mail ou Senha inválido.')
         }
-        return Alert.alert("Entrar", "Não foi possível acessar");
+        return Alert.alert('Entrar', 'Não foi possível acessar')
       })
-      .then(() => console.log("entrou"));
-  };
+      .then(() => console.log('entrou'))
+  }
 
   const handleCreateAccount = () => {
-    navigation.navigate("criarConta");
-  };
+    navigation.navigate('criarConta')
+  }
 
   const handleForgotPassword = () => {
-    navigation.navigate("resetPassword");
-  };
+    navigation.navigate('resetPassword')
+  }
 
   return (
     <VStack
       flex={1}
-      alignItems={"center"}
+      alignItems={'center'}
       px={8}
       pt={24}
-      backgroundColor={"primary.300"}
+      backgroundColor={'primary.300'}
     >
       <OndasDeParto
         width="300"
@@ -94,7 +93,7 @@ export function SignIn() {
         onPress={handleSignIn}
         isLoading={isLoading}
       />
-      <Box alignItems={"center"}>
+      <Box alignItems={'center'}>
         <TouchableOpacity onPress={handleForgotPassword}>
           <Text color="primary.700">Esqueci minha senha.</Text>
         </TouchableOpacity>
@@ -103,5 +102,5 @@ export function SignIn() {
         </TouchableOpacity>
       </Box>
     </VStack>
-  );
+  )
 }

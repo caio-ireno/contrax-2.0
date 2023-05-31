@@ -1,46 +1,46 @@
-import React, { useState } from "react";
-import { Icon, Text, VStack, useTheme } from "native-base";
-import { Envelope, Key, IdentificationBadge } from "phosphor-react-native";
-import { useNavigation } from "@react-navigation/native";
-import { Button } from "../components/Button";
-import { TouchableOpacity } from "react-native";
-import { Input } from "../components/Input";
-import { criarNovaGestante } from "../firebase services/NovaGestante";
-import { OndasDeParto } from "../icons/OndasParto";
-import { Ondas } from "../icons/Ondas";
+import { useNavigation } from '@react-navigation/native'
+import { Icon, Text, useTheme, VStack } from 'native-base'
+import { Envelope, IdentificationBadge, Key } from 'phosphor-react-native'
+import React, { useState } from 'react'
+import { TouchableOpacity } from 'react-native'
+
+import { Button } from '../components/Button'
+import { Input } from '../components/Input'
+import { criarNovaGestante } from '../firebase services/NovaGestante'
+import { Ondas } from '../icons/Ondas'
 
 export const CriarConta = () => {
-  const [nome, setNome] = useState("");
-  const [email, setEmail] = useState("");
-  const [password, setPassword] = useState("");
-  const [isLoading, setIsLoading] = useState(false);
+  const [nome, setNome] = useState('')
+  const [email, setEmail] = useState('')
+  const [password, setPassword] = useState('')
+  const [isLoading, setIsLoading] = useState(false)
 
-  const theme = useTheme();
-  const navigation = useNavigation();
+  const theme = useTheme()
+  const navigation = useNavigation()
 
   const handleCreateAccount = () => {
-    setIsLoading(true);
+    setIsLoading(true)
     criarNovaGestante(email, password, nome)
-      .then((userCredential) => {
-        setIsLoading(false);
-        console.log(userCredential.id);
+      .then(userCredential => {
+        setIsLoading(false)
+        console.log(userCredential.id)
       })
-      .catch((error) => {
-        console.log(error);
-        setIsLoading(false);
-      });
-  };
+      .catch(error => {
+        console.log(error)
+        setIsLoading(false)
+      })
+  }
 
   const handleLogin = () => {
-    navigation.navigate("login");
-  };
+    navigation.navigate('login')
+  }
   return (
     <VStack
       flex={1}
-      alignItems={"center"}
+      alignItems={'center'}
       px={8}
       pt={24}
-      backgroundColor={"primary.300"}
+      backgroundColor={'primary.300'}
     >
       <Ondas width="200" height="100" color="#121629" />
 
@@ -84,5 +84,5 @@ export const CriarConta = () => {
         <Text>Já possui uma conta? Acesse</Text>
       </TouchableOpacity>
     </VStack>
-  );
-};
+  )
+}

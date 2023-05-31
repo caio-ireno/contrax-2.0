@@ -1,12 +1,13 @@
-import { createNativeStackNavigator } from "@react-navigation/native-stack";
-import { CriarConta } from "../screens/CriarConta";
-import { SignIn } from "../screens/SignIn";
-import { Login } from "../screens/Login";
-import { Profissional } from "../screens/profissional/Profissional";
-import { GestanteInfo } from "../screens/profissional/GestanteInfo";
-import { ResetPassword } from "../screens/ResetPassword";
+import { createNativeStackNavigator } from '@react-navigation/native-stack'
 
-const { Navigator, Screen } = createNativeStackNavigator();
+import { CriarConta } from '../screens/CriarConta'
+import { Login } from '../screens/Login'
+import { GestanteInfo } from '../screens/profissional/GestanteInfo'
+import { Profissional } from '../screens/profissional/Profissional'
+import { ResetPassword } from '../screens/ResetPassword'
+import { SignIn } from '../screens/SignIn'
+
+const { Navigator, Screen } = createNativeStackNavigator()
 
 export const LoginRoutes = () => {
   return (
@@ -18,5 +19,5 @@ export const LoginRoutes = () => {
       <Screen name="profissional" component={Profissional} />
       <Screen name="gestanteInfo" component={GestanteInfo} />
     </Navigator>
-  );
-};
+  )
+}
