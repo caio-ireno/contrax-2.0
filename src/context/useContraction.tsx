@@ -89,7 +89,7 @@ export const AppContraction: React.FC<AppThemeProviderProps> = ({
     SetCustomInterval(
       BackgroundTimer.setInterval(() => {
         changeTimer()
-      }, 1000),
+      }, 850),
     )
   }
 

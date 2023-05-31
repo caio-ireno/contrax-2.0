@@ -1,5 +1,5 @@
 import auth from '@react-native-firebase/auth'
-import { Box, Icon, Modal, Text, useTheme, VStack } from 'native-base'
+import { Box, Divider, Icon, Modal, Text, useTheme, VStack } from 'native-base'
 import { Palette, SignOut, Trash } from 'phosphor-react-native'
 import React, { useContext, useState } from 'react'
 import { Alert } from 'react-native'
@@ -29,19 +29,20 @@ export const Ajuda = () => {
 
   return (
     <VStack flex={1} backgroundColor={'primary.300'}>
-      <Box py={5} flexDirection={'column'} alignItems={'center'} width={'full'}>
+      <Box flexDirection={'column'} alignItems={'center'} width={'full'} mt={5}>
         <OndasDeParto
           width="200"
           height="180"
           color="#121629"
           BgColor="transparent"
         />
-        <Text fontSize={20}>Bem vinda, {gestante.name}</Text>
+        <Text mt={5} fontSize={20}>
+          Bem vinda, {gestante.name}
+        </Text>
       </Box>
 
       <Box
         pl={5}
-        mb={5}
         mt={5}
         width={'full'}
         height={10}
@@ -50,21 +51,45 @@ export const Ajuda = () => {
       >
         Configurações
       </Box>
-      <VStack flex={1} px={8} pb={4}>
+
+      <VStack flex={1}>
         <Button
-          borderRadius={10}
+          borderRadius={0}
           justifyContent={'space-between'}
-          leftIcon={<Icon as={<Trash color={theme.colors.secondary[800]} />} />}
+          leftIcon={
+            <Icon as={<Trash color={theme.colors.secondary[800]} />} mr={5} />
+          }
           label="Deletar informações"
           width={'full'}
           onPress={() => setShowModal(true)}
-          mb={5}
+        />
+        <Divider thickness={1} bg={'primary.200'} />
+        <Button
+          borderRadius={0}
+          justifyContent={'space-between'}
+          leftIcon={
+            <Icon as={<Palette color={theme.colors.secondary[800]} />} mr={5} />
+          }
+          label="Trocar tema do App"
+          width={'full'}
+          onPress={toggleTheme}
+        />
+        <Divider thickness={1} bg={'primary.200'} />
+
+        <Button
+          borderRadius={0}
+          justifyContent={'space-between'}
+          leftIcon={
+            <Icon as={<SignOut color={theme.colors.secondary[800]} />} mr={5} />
+          }
+          label="Sair da Conta"
+          width={'full'}
+          onPress={handleLogout}
         />
 
         <Modal isOpen={showModal} onClose={() => setShowModal(false)}>
           <Box alignItems={'center'} width={'80%'}>
             <Button
-              mb={2}
               backgroundColor={'primary.400'}
               width={'full'}
               label="Cancelar"
@@ -84,28 +109,6 @@ export const Ajuda = () => {
             />
           </Box>
         </Modal>
-        <Button
-          borderRadius={10}
-          justifyContent={'space-between'}
-          leftIcon={
-            <Icon as={<SignOut color={theme.colors.secondary[800]} />} />
-          }
-          label="Sair da Conta"
-          width={'full'}
-          onPress={handleLogout}
-          mb={5}
-        />
-        <Button
-          borderRadius={10}
-          justifyContent={'space-between'}
-          leftIcon={
-            <Icon as={<Palette color={theme.colors.secondary[800]} />} />
-          }
-          mb={5}
-          label="Trocar tema do App"
-          width={'full'}
-          onPress={toggleTheme}
-        />
       </VStack>
     </VStack>
   )
