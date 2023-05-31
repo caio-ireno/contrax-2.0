@@ -18,8 +18,6 @@ export const DARKTHEME = extendTheme({
       800: '#000', //logo pagina ajuda
       900: '#76D7C4', // on hover button
     },
-
-
   },
   fonts: {
     body: 'Roboto'

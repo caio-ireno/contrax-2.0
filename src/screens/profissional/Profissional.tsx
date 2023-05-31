@@ -1,5 +1,4 @@
-import { Heading, VStack } from "native-base";
-import { LogoCompleto } from "../../icons/LogoCompleto";
+import { Heading, Text, VStack } from "native-base";
 import { Button } from "../../components/Button";
 import { useNavigation } from "@react-navigation/native";
 import { Input } from "../../components/Input";
@@ -35,12 +34,14 @@ export const Profissional = () => {
     >
       <OndasDeParto
         width="300"
-        height="260"
+        height="220"
         color="#121629"
         BgColor="transparent"
       />
-      <Heading mb={5}>Acesse sua conta</Heading>
-      <Input onChangeText={setGestanteId} mb={5} />
+      <Text mt={10} mb={2} fontSize={26}>
+        Acesse sua conta
+      </Text>
+      <Input onChangeText={setGestanteId} mb={3} textAlign={"center"} />
       <Button label="Entrar" onPress={handlePregnentInfo} />
     </VStack>
   );

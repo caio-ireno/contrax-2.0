@@ -23,8 +23,8 @@ export function GestanteInfo({ route }: GestanteInfoProps) {
     >
       <Box
         width="full"
-        backgroundColor={"secondary.100"}
-        height={10}
+        backgroundColor={"secondary.900"}
+        height={16}
         borderWidth={0}
         borderRadius={5}
         fontFamily={"body"}
@@ -34,8 +34,9 @@ export function GestanteInfo({ route }: GestanteInfoProps) {
         alignItems={"center"}
         flexDirection={"row"}
       >
-        <Text fontWeight={"bold"}>Nome: </Text>
-        {gestante.name}
+        <Text fontWeight={"bold"} fontSize={24}>
+          {gestante.name}
+        </Text>
       </Box>
       <Box
         width="full"
