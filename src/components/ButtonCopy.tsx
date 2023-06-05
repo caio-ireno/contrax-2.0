@@ -29,7 +29,7 @@ export const ButtonCopy: React.FC<ButtonProps> = ({ idName }) => {
       onPress={copyToClipboard}
       borderRadius={12}
     >
-      <Text color="primary.100" fontFamily={'body'} fontSize={16}>
+      <Text color="secondary.100" fontFamily={'body'} fontSize={16}>
         Enviar código 🤰
       </Text>
     </Button>
